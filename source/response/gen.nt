@@ -23,20 +23,19 @@ constant responses: gen(response) {
   Gen of {
     generate = {
       function (size) {
-        let protocol-version = *"HTTP/1.1" in
         let status-code = random-in-range(100, 999) in
         let fields = headers::generate(size) in
         let body = !text-gen::generate(size) in
-        Response of {protocol-version, status-code, fields, body}
+        Response of {status-code, fields, body}
       }
     },
     shrink = {
       function (req) {
-        let Response of {protocol-version, status-code, fields, body} = req in
+        let Response of {status-code, fields, body} = req in
         let cands = _field-body-pair::shrink(Pair(fields, body)) in
         for-each(cands, function (cand) {
           let Pair(fields, body) = cand in
-          Response of {protocol-version, status-code, fields, body}
+          Response of {status-code, fields, body}
         })
       }
     },

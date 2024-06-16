@@ -7,13 +7,13 @@ import {
 }
 
 define show-request(r: request): text {
-  let Request of {method, path, protocol-version, fields, body} = r in
+  let Request of {method, path, fields, body} = r in
   join([
     show-request-method(method),
     *" ",
     path,
     *" ",
-    protocol-version,
+    *"HTTP/1.1",
     *"\r\n",
     show-header(fields),
     *"\r\n",

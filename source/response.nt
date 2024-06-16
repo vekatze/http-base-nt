@@ -6,7 +6,6 @@ import {
 
 data response {
 | Response(
-    protocol-version: text,
     status-code: int,
     fields: header,
     body: text,
@@ -16,7 +15,6 @@ data response {
 define text-response(status-code: int, body: text) {
   let len on body = text-byte-length(body) in
   Response of {
-    protocol-version = *"HTTP/1.1",
     status-code,
     fields = [Field(*"content-length", %ld(len))],
     body,

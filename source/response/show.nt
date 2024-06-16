@@ -19,9 +19,9 @@ define _get-status-code-text(code: int): &text {
 }
 
 define show-response(resp: response): text {
-  let Response of {protocol-version, status-code, fields, body} = resp in
+  let Response of {status-code, fields, body} = resp in
   join([
-    protocol-version,
+    *"HTTP/1.1",
     *" ",
     %ld(status-code),
     *" ",

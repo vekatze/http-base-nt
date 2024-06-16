@@ -7,7 +7,6 @@ data request {
 | Request(
     method: request-method,
     path: text,
-    protocol-version: text,
     fields: header,
     body: text,
   )

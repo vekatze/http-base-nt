@@ -24,6 +24,7 @@ define _status-code(): parser(int) {
 define response-parser(): parser(response) {
   with zonk {
     bind protocol-version = _symbol() in
+    let _ = protocol-version in
     bind _ = _skip-space in
     bind status-code = _status-code() in
     bind _ = _skip-space in
@@ -35,7 +36,6 @@ define response-parser(): parser(response) {
     bind body = _read-all() in
     return(
       Response of {
-        protocol-version,
         status-code,
         fields,
         body,

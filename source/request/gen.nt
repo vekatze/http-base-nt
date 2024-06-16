@@ -27,21 +27,20 @@ constant requests: gen(request) {
         let method = request-methods::generate(size) in
         let path = !text-gen::generate(size) in
         // let protocol-version = !text-gen::generate(size) in
-        let protocol-version = *"HTTP/1.1" in
         let fields = headers::generate(size) in
         let body = !text-gen::generate(size) in
-        Request of {method, path, protocol-version, fields, body}
+        Request of {method, path, fields, body}
       }
     },
     shrink = {
       function (req) {
-        let Request of {method, path, protocol-version, fields, body} = req in
+        let Request of {method, path, fields, body} = req in
         // let tup = Pair(method, Pair(path, Pair(protocol-version, Pair(fields, body)))) in
         let tup = Pair(method, Pair(path, Pair(fields, body))) in
         let cands = _tuple-requests::shrink(tup) in
         for-each(cands, function (cand) {
           let Pair(method, Pair(path, Pair(fields, body))) = cand in
-          Request of {method, path, protocol-version, fields, body}
+          Request of {method, path, fields, body}
         })
       }
     },

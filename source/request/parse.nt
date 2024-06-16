@@ -13,6 +13,7 @@ define request-parser(): parser(request) {
     bind path = _symbol() in
     bind _ = _skip-space in
     bind protocol-version = _symbol() in
+    let _ = protocol-version in
     bind _ = _http-line-break() in
     bind fields = header-parser() in
     bind _ = _http-line-break() in
@@ -21,7 +22,6 @@ define request-parser(): parser(request) {
       Request of {
         method,
         path,
-        protocol-version,
         fields,
         body,
       },
