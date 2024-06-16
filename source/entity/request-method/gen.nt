@@ -1,0 +1,55 @@
+import {
+  core.random {random-in-range},
+  noa.gen {Gen, gen},
+  this.entity.request-method {
+    DELETE,
+    GET,
+    HEAD,
+    OPTIONS,
+    PATCH,
+    POST,
+    PUT,
+    TRACE,
+    request-method,
+  },
+  this.entity.request-method.show,
+}
+
+constant request-methods: gen(request-method) {
+  Gen of {
+    generate = {
+      function (_) {
+        let dice = random-in-range(0, 7) in
+        match dice {
+        | 0 =>
+          GET
+        | 1 =>
+          HEAD
+        | 2 =>
+          POST
+        | 3 =>
+          PUT
+        | 4 =>
+          DELETE
+        | 5 =>
+          OPTIONS
+        | 6 =>
+          TRACE
+        | _ =>
+          PATCH
+        }
+      }
+    },
+    shrink = {
+      function (m) {
+        match m {
+        | GET =>
+          []
+        | _ =>
+          [GET]
+        }
+      }
+    },
+    viewer = this.entity.request-method.show.as-show,
+  }
+}

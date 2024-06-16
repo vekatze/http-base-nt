@@ -1,0 +1,10 @@
+import {
+  noa.gen {gen},
+  noa.gen.lists {lists},
+  this.entity.field.gen {fields},
+  this.entity.header {header},
+}
+
+constant headers: gen(header) {
+  lists(fields)
+}

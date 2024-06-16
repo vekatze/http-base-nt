@@ -7,5 +7,4 @@ data request-method {
 | OPTIONS
 | TRACE
 | PATCH
-| UNKNOWN
 }

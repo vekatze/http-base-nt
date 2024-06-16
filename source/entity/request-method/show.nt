@@ -9,7 +9,6 @@ import {
     POST,
     PUT,
     TRACE,
-    UNKNOWN,
     request-method,
   },
 }
@@ -32,8 +31,6 @@ define show-request-method(rm: request-method): text {
     *"TRACE"
   | PATCH =>
     *"PATCH"
-  | UNKNOWN =>
-    *"__UNKNOWN__"
   }
 }
 

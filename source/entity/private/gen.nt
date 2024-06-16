@@ -1,0 +1,90 @@
+import {
+  core.control {grow},
+  core.int {max-int},
+  core.list {filter, map-N},
+  core.list.eq,
+  core.random {random},
+  core.rune.show,
+  core.text {join, pack, unpack},
+  core.text.show,
+  noa.gen {Gen, gen},
+  noa.gen.lists {_shrink-list},
+  noa.gen.runes {runes},
+}
+
+data config {
+| Config(
+    blacklist: list(rune),
+    min-length: int,
+  )
+}
+
+constant list-rune-eq: core.list.eq.trope(rune) {
+  core.list.eq.from-eq(core.rune.eq.as-eq-N)
+}
+
+inline adjusted-runes(!c: config): gen(rune) {
+  Gen of {
+    generate = {
+      define loop(size) {
+        pin cand = runes::generate(size) in
+        pin bk = !c::blacklist in
+        let b = list-rune-eq::member(cand, bk) in
+        if b {
+          loop(size)
+        } else {
+          *cand
+        }
+      }
+    },
+    shrink = {
+      function (v) {
+        let cands = runes::shrink(v) in
+        filter(
+          function (cand) {
+            pin cand = cand in
+            pin bk = !c::blacklist in
+            not(list-rune-eq::member(cand, bk))
+          },
+          cands,
+        )
+      }
+    },
+    viewer = core.rune.show.as-show,
+  }
+}
+
+inline adjusted-texts(!c: config): gen(text) {
+  let !rune-gen = adjusted-runes(!c) in
+  Gen of {
+    generate = {
+      function (size) {
+        let text-len = max-int(random(size), !c::min-length) in
+        let tmp =
+          grow([], text-len, function (acc, _) {
+            let r = !rune-gen::generate(size) in
+            Cons(core.text.singleton(r), acc)
+          })
+        in
+        join(tmp)
+      }
+    },
+    shrink = {
+      function (t: text) {
+        pin t = t in
+        let rune-seq = unpack(t) in
+        pin rune-lists = _shrink-list(!rune-gen)(rune-seq) in
+        let result = map-N(pack, rune-lists) in
+        filter(
+          function (t) {
+            let len on t = core.text.length(t) in
+            let _ = t in
+            ge-int(len, !c::min-length)
+          },
+          result,
+        )
+      }
+    },
+    viewer = core.text.show.as-show,
+  }
+}

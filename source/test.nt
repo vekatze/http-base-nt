@@ -1,3 +1,69 @@
+import {
+  core.text {split-on},
+  noa.suite {noa},
+  this.entity.request {request},
+  this.entity.request.gen {requests},
+  this.entity.request.parse {request-parser},
+  this.entity.request.show {show-request},
+  this.entity.response {response},
+  this.entity.response.gen {responses},
+  this.entity.response.parse {response-parser},
+  this.entity.response.show {show-response},
+  zonk.parser {run},
+  zonk.state {new-state},
+}
+
 define main(): unit {
-  print("Hello, world!\n")
+  noa::check(
+    "∀ (r: request). show(parse(show(r))) == show(r)",
+    requests,
+    function (!r: request) {
+      pin req-text-1 = show-request(!r) in
+      pin st = new-state(*req-text-1) in
+      match run(request-parser(), st) {
+      | Right(req) =>
+        pin req-text-2 = show-request(req) in
+        eq-text(req-text-1, req-text-2)
+      | Left(_) =>
+        False
+      };
+    },
+  );
+  noa::check(
+    "∀ (r: request). `show(r)` contains at least one empty line",
+    requests,
+    function (!r: request) {
+      pin req-text = show-request(!r) in
+      pin segments = split-on("\r\n\r\n", req-text) in
+      ge-int(length(segments), 2)
+    },
+  );
+  noa::check(
+    "∀ (r: response). show(parse(show(r))) == show(r)",
+    responses,
+    function (!r: response) {
+      pin req-text-1 = show-response(!r) in
+      pin st = new-state(*req-text-1) in
+      match run(response-parser(), st) {
+      | Right(req) =>
+        pin req-text-2 = show-response(req) in
+        eq-text(req-text-1, req-text-2)
+      | Left(_) =>
+        False
+      };
+    },
+  );
+  noa::check(
+    "∀ (r: response). `show(r)` contains at least one empty line",
+    responses,
+    function (!r: response) {
+      pin req-text = show-response(!r) in
+      pin segments = split-on("\r\n\r\n", req-text) in
+      ge-int(length(segments), 2)
+    },
+  );
+}
+
+define zen(): unit {
+  main()
 }

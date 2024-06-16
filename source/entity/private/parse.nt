@@ -5,7 +5,7 @@ import {
 define _is-space(r: rune): bool {
   if eq-rune(r, ` `) {
     True
-  } else-if ule-int32(sub-int32(magic cast(rune, int32, r), 0x9), 0x4) {
+  } else-if and(le-rune(`\u{9}`, r), le-rune(r, `\u{d}`)) {
     True
   } else {
     False

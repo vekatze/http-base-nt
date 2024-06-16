@@ -1,7 +1,8 @@
 import {
+  core.show {Show, show},
   core.text {join},
-  this.entity.response {Response, response},
   this.entity.header.show {show-header},
+  this.entity.response {Response, response},
 }
 
 define _get-status-code-text(code: int): &text {
@@ -30,4 +31,8 @@ define show-response(resp: response): text {
     *"\r\n",
     body,
   ])
+}
+
+constant as-show: show(response) {
+  Show of {show = show-response}
 }

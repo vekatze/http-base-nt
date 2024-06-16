@@ -9,37 +9,42 @@ import {
     POST,
     PUT,
     TRACE,
-    UNKNOWN,
     request-method,
   },
-  zonk.parser {parser, return, zonk},
+  zonk.parser {fail, parser, return, zonk},
+  zonk.tag {Label},
 }
 
 define request-method-parser(): parser(request-method) {
   with zonk {
     bind method-text = _symbol() in
-    let method on method-text =
+    let method-or-none on method-text =
       if eq-text(method-text, "GET") {
-        GET
+        Right(GET)
       } else-if eq-text(method-text, "HEAD") {
-        HEAD
+        Right(HEAD)
       } else-if eq-text(method-text, "POST") {
-        POST
+        Right(POST)
       } else-if eq-text(method-text, "PUT") {
-        PUT
+        Right(PUT)
       } else-if eq-text(method-text, "DELETE") {
-        DELETE
+        Right(DELETE)
       } else-if eq-text(method-text, "OPTIONS") {
-        OPTIONS
+        Right(OPTIONS)
       } else-if eq-text(method-text, "TRACE") {
-        TRACE
+        Right(TRACE)
       } else-if eq-text(method-text, "PATCH") {
-        PATCH
+        Right(PATCH)
       } else {
-        UNKNOWN
+        Left(Unit)
       }
     in
     let _ = method-text in
-    return(method)
+    match method-or-none {
+    | Right(method) =>
+      return(method)
+    | Left(_) =>
+      fail([Label("request method")])
+    }
   }
 }

@@ -6,9 +6,14 @@ import {
 }
 
 define show-header(fields: header): text {
-  let ts = map(show-field, fields) in
-  let k = intercalate(*"\r\n", ts) in
-  join([k, *"\r\n"])
+  let len on fields = length(fields) in
+  if eq-int(len, 0) {
+    *""
+  } else {
+    let ts = map(show-field, fields) in
+    let k = intercalate(*"\r\n", ts) in
+    join([k, *"\r\n"])
+  }
 }
 
 constant as-show: show(header) {
