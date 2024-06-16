@@ -18,5 +18,11 @@
         "https://github.com/vekatze/zonk/raw/main/archive/0-1-13.tar.zst",
       ],
     },
+    noa {
+      digest "fW5bOJLE1_xfaiCp9I2QrDKOgsCFNPM9KrEsdl-47VU",
+      mirror [
+        "https://github.com/vekatze/noa/raw/main/archive/0-3-11.tar.zst",
+      ],
+    },
   },
 }
