@@ -33,3 +33,7 @@ define _read-all(): parser(text) {
     True
   })
 }
+
+define _is-status-code-number(r: rune): bool {
+  and(le-rune(`0`, r), le-rune(r, `9`))
+}
