@@ -12,5 +12,11 @@
       ],
       enable-preset true,
     },
+    zonk {
+      digest "WLuoijMG4QTzTtwJsi85CNDF8sGEOIZVOmKPb3gSS50",
+      mirror [
+        "https://github.com/vekatze/zonk/raw/main/archive/0-1-13.tar.zst",
+      ],
+    },
   },
 }
