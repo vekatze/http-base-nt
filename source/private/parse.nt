@@ -24,6 +24,12 @@ define _symbol(): parser(text) {
   take-while(compose(not, _is-space))
 }
 
+define _until-newline(): parser(text) {
+  take-while(function (r) {
+    ne-rune(r, `\r`)
+  })
+}
+
 define _http-line-break(): parser(unit) {
   chunk("\r\n")
 }
