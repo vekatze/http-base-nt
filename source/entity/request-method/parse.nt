@@ -1,0 +1,45 @@
+import {
+  this.entity.private.parse {_symbol},
+  this.entity.request-method {
+    DELETE,
+    GET,
+    HEAD,
+    OPTIONS,
+    PATCH,
+    POST,
+    PUT,
+    TRACE,
+    UNKNOWN,
+    request-method,
+  },
+  zonk.parser {parser, return, zonk},
+}
+
+define request-method-parser(): parser(request-method) {
+  with zonk {
+    bind method-text = _symbol() in
+    let method on method-text =
+      if eq-text(method-text, "GET") {
+        GET
+      } else-if eq-text(method-text, "HEAD") {
+        HEAD
+      } else-if eq-text(method-text, "POST") {
+        POST
+      } else-if eq-text(method-text, "PUT") {
+        PUT
+      } else-if eq-text(method-text, "DELETE") {
+        DELETE
+      } else-if eq-text(method-text, "OPTIONS") {
+        OPTIONS
+      } else-if eq-text(method-text, "TRACE") {
+        TRACE
+      } else-if eq-text(method-text, "PATCH") {
+        PATCH
+      } else {
+        UNKNOWN
+      }
+    in
+    let _ = method-text in
+    return(method)
+  }
+}

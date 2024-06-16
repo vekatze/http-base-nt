@@ -1,0 +1,35 @@
+import {
+  zonk.parser {chunk, drop-while, parser, take-while},
+}
+
+define _is-space(r: rune): bool {
+  if eq-rune(r, ` `) {
+    True
+  } else-if ule-int32(sub-int32(magic cast(rune, int32, r), 0x9), 0x4) {
+    True
+  } else {
+    False
+  }
+}
+
+define _is-colon(r: rune): bool {
+  eq-rune(r, `:`)
+}
+
+constant _skip-space: parser(unit) {
+  drop-while(_is-space)
+}
+
+define _symbol(): parser(text) {
+  take-while(compose(not, _is-space))
+}
+
+define _http-line-break(): parser(unit) {
+  chunk("\r\n")
+}
+
+define _read-all(): parser(text) {
+  take-while(function (_) {
+    True
+  })
+}

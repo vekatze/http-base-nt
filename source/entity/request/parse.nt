@@ -1,0 +1,30 @@
+import {
+  this.entity.header.parse {header-parser},
+  this.entity.private.parse {_http-line-break, _read-all, _skip-space, _symbol},
+  this.entity.request {Request, request},
+  this.entity.request-method.parse {request-method-parser},
+  zonk.parser {parser, return, zonk},
+}
+
+define request-parser(): parser(request) {
+  with zonk {
+    bind method = request-method-parser() in
+    bind _ = _skip-space in
+    bind path = _symbol() in
+    bind _ = _skip-space in
+    bind protocol-version = _symbol() in
+    bind _ = _http-line-break() in
+    bind fields = header-parser() in
+    bind _ = _http-line-break() in
+    bind body = _read-all() in
+    return(
+      Request of {
+        method,
+        path,
+        protocol-version,
+        fields,
+        body,
+      },
+    )
+  }
+}

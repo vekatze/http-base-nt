@@ -1,0 +1,17 @@
+import {
+  this.entity.field {Field, field},
+  this.entity.private.parse {_http-line-break, _is-colon, _skip-space, _symbol},
+  zonk.parser {chunk, not-followed-by, parser, return, take-while, zonk},
+}
+
+define field-parser(): parser(field) {
+  with zonk {
+    bind _ = not-followed-by(chunk("\r")) in
+    bind key = take-while(compose(not, _is-colon)) in
+    bind _ = chunk(":") in
+    bind _ = _skip-space in
+    bind value = _symbol() in
+    bind _ = _http-line-break() in
+    return(Field of {key, value})
+  }
+}

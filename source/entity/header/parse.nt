@@ -1,0 +1,9 @@
+import {
+  this.entity.field.parse {field-parser},
+  this.entity.header {header},
+  zonk.parser {many, parser},
+}
+
+define header-parser(): parser(header) {
+  many(field-parser())
+}
