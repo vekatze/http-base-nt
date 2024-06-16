@@ -1,8 +1,8 @@
 import {
   noa.gen {gen},
   noa.gen.lists {lists},
-  this.entity.field.gen {fields},
-  this.entity.header {header},
+  this.field.gen {fields},
+  this.header {header},
 }
 
 constant headers: gen(header) {

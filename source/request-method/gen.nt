@@ -1,7 +1,7 @@
 import {
   core.random {random-in-range},
   noa.gen {Gen, gen},
-  this.entity.request-method {
+  this.request-method {
     DELETE,
     GET,
     HEAD,
@@ -12,7 +12,7 @@ import {
     TRACE,
     request-method,
   },
-  this.entity.request-method.show,
+  this.request-method.show,
 }
 
 constant request-methods: gen(request-method) {
@@ -50,6 +50,6 @@ constant request-methods: gen(request-method) {
         }
       }
     },
-    viewer = this.entity.request-method.show.as-show,
+    viewer = this.request-method.show.as-show,
   }
 }

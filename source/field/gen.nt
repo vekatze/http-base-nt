@@ -1,9 +1,9 @@
 import {
   noa.gen {Gen, gen},
   noa.gen.pairs {pairs},
-  this.entity.field {Field, field},
-  this.entity.field.show,
-  this.entity.private.gen {Config, adjusted-texts},
+  this.field {Field, field},
+  this.field.show,
+  this.private.gen {Config, adjusted-texts},
 }
 
 constant _kvs: gen(pair(text, text)) {
@@ -31,6 +31,6 @@ constant fields: gen(field) {
         })
       }
     },
-    viewer = this.entity.field.show.as-show,
+    viewer = this.field.show.as-show,
   }
 }

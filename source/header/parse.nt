@@ -1,6 +1,6 @@
 import {
-  this.entity.field.parse {field-parser},
-  this.entity.header {header},
+  this.field.parse {field-parser},
+  this.header {header},
   zonk.parser {many, parser},
 }
 

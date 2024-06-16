@@ -1,7 +1,7 @@
 import {
   core.show {Show, show},
   core.text {join},
-  this.entity.field {Field, field},
+  this.field {Field, field},
 }
 
 define show-field(h: field): text {

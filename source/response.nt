@@ -1,7 +1,7 @@
 import {
   core.text {text-byte-length},
-  this.entity.field {Field},
-  this.entity.header {header},
+  this.field {Field},
+  this.header {header},
 }
 
 data response {

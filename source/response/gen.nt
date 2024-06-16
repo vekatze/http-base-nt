@@ -2,11 +2,11 @@ import {
   core.random {random-in-range},
   noa.gen {Gen, gen},
   noa.gen.pairs {pairs},
-  this.entity.header {header},
-  this.entity.header.gen {headers},
-  this.entity.private.gen {Config, adjusted-texts},
-  this.entity.response {Response, response},
-  this.entity.response.show,
+  this.header {header},
+  this.header.gen {headers},
+  this.private.gen {Config, adjusted-texts},
+  this.response {Response, response},
+  this.response.show,
 }
 
 constant _field-body-pair: gen(pair(header, text)) {
@@ -40,6 +40,6 @@ constant responses: gen(response) {
         })
       }
     },
-    viewer = this.entity.response.show.as-show,
+    viewer = this.response.show.as-show,
   }
 }

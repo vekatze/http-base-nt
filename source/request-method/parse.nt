@@ -1,6 +1,6 @@
 import {
-  this.entity.private.parse {_symbol},
-  this.entity.request-method {
+  this.private.parse {_symbol},
+  this.request-method {
     DELETE,
     GET,
     HEAD,

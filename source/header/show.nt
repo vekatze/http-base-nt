@@ -1,8 +1,8 @@
 import {
   core.show {Show, show},
   core.text {intercalate, join},
-  this.entity.field.show {show-field},
-  this.entity.header {header},
+  this.field.show {show-field},
+  this.header {header},
 }
 
 define show-header(fields: header): text {

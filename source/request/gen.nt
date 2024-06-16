@@ -1,13 +1,13 @@
 import {
   noa.gen {Gen, gen},
   noa.gen.pairs {pairs},
-  this.entity.header {header},
-  this.entity.header.gen {headers},
-  this.entity.private.gen {Config, adjusted-texts},
-  this.entity.request {Request, request},
-  this.entity.request-method {request-method},
-  this.entity.request-method.gen {request-methods},
-  this.entity.request.show,
+  this.header {header},
+  this.header.gen {headers},
+  this.private.gen {Config, adjusted-texts},
+  this.request {Request, request},
+  this.request-method {request-method},
+  this.request-method.gen {request-methods},
+  this.request.show,
 }
 
 constant _tuple-requests: gen(pair(request-method, pair(text, pair(header, text)))) {
@@ -45,6 +45,6 @@ constant requests: gen(request) {
         })
       }
     },
-    viewer = this.entity.request.show.as-show,
+    viewer = this.request.show.as-show,
   }
 }

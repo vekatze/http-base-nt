@@ -1,6 +1,6 @@
 import {
   core.show {Show, show},
-  this.entity.request-method {
+  this.request-method {
     DELETE,
     GET,
     HEAD,

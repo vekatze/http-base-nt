@@ -1,8 +1,8 @@
 import {
-  this.entity.header.parse {header-parser},
-  this.entity.private.parse {_http-line-break, _read-all, _skip-space, _symbol},
-  this.entity.request {Request, request},
-  this.entity.request-method.parse {request-method-parser},
+  this.header.parse {header-parser},
+  this.private.parse {_http-line-break, _read-all, _skip-space, _symbol},
+  this.request {Request, request},
+  this.request-method.parse {request-method-parser},
   zonk.parser {parser, return, zonk},
 }
 

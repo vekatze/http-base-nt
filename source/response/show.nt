@@ -1,8 +1,8 @@
 import {
   core.show {Show, show},
   core.text {join},
-  this.entity.header.show {show-header},
-  this.entity.response {Response, response},
+  this.header.show {show-header},
+  this.response {Response, response},
 }
 
 define _get-status-code-text(code: int): &text {

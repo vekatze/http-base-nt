@@ -1,6 +1,6 @@
 import {
-  this.entity.field {Field, field},
-  this.entity.private.parse {_http-line-break, _is-colon, _skip-space, _symbol},
+  this.field {Field, field},
+  this.private.parse {_http-line-break, _is-colon, _skip-space, _symbol},
   zonk.parser {chunk, not-followed-by, parser, return, take-while, zonk},
 }
 
