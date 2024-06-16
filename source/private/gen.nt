@@ -12,24 +12,24 @@ import {
   noa.gen.runes {runes},
 }
 
-data config {
-| Config(
+data _config {
+| _Config(
     blacklist: list(rune),
     min-length: int,
   )
 }
 
-constant list-rune-eq: core.list.eq.trope(rune) {
+constant _list-rune-eq: core.list.eq.trope(rune) {
   core.list.eq.from-eq(core.rune.eq.as-eq-N)
 }
 
-inline adjusted-runes(!c: config): gen(rune) {
+inline _adjusted-runes(!c: _config): gen(rune) {
   Gen of {
     generate = {
       define loop(size) {
         pin cand = runes::generate(size) in
         pin bk = !c::blacklist in
-        let b = list-rune-eq::member(cand, bk) in
+        let b = _list-rune-eq::member(cand, bk) in
         if b {
           loop(size)
         } else {
@@ -44,7 +44,7 @@ inline adjusted-runes(!c: config): gen(rune) {
           function (cand) {
             pin cand = cand in
             pin bk = !c::blacklist in
-            not(list-rune-eq::member(cand, bk))
+            not(_list-rune-eq::member(cand, bk))
           },
           cands,
         )
@@ -54,8 +54,8 @@ inline adjusted-runes(!c: config): gen(rune) {
   }
 }
 
-inline adjusted-texts(!c: config): gen(text) {
-  let !rune-gen = adjusted-runes(!c) in
+inline _adjusted-texts(!c: _config): gen(text) {
+  let !rune-gen = _adjusted-runes(!c) in
   Gen of {
     generate = {
       function (size) {

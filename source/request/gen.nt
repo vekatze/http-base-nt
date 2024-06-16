@@ -3,7 +3,7 @@ import {
   noa.gen.pairs {pairs},
   this.header {header},
   this.header.gen {headers},
-  this.private.gen {Config, adjusted-texts},
+  this.private.gen {_Config, _adjusted-texts},
   this.request {Request, request},
   this.request-method {request-method},
   this.request-method.gen {request-methods},
@@ -12,21 +12,20 @@ import {
 
 constant _tuple-requests: gen(pair(request-method, pair(text, pair(header, text)))) {
   let rune-blacklist = [` `, `\u{8}`, `\u{9}`, `\u{a}`, `\u{b}`, `\u{c}`, `\u{d}`] in
-  let c = Config of {blacklist = rune-blacklist, min-length = 1} in
-  let !text-gen = adjusted-texts(c) in
+  let c = _Config of {blacklist = rune-blacklist, min-length = 1} in
+  let !text-gen = _adjusted-texts(c) in
   pairs(request-methods, pairs(!text-gen, pairs(headers, !text-gen)))
 }
 
 constant requests: gen(request) {
   let rune-blacklist = [` `, `\u{8}`, `\u{9}`, `\u{a}`, `\u{b}`, `\u{c}`, `\u{d}`] in
-  let c = Config of {blacklist = rune-blacklist, min-length = 1} in
-  let !text-gen = adjusted-texts(c) in
+  let c = _Config of {blacklist = rune-blacklist, min-length = 1} in
+  let !text-gen = _adjusted-texts(c) in
   Gen of {
     generate = {
       function (size) {
         let method = request-methods::generate(size) in
         let path = !text-gen::generate(size) in
-        // let protocol-version = !text-gen::generate(size) in
         let fields = headers::generate(size) in
         let body = !text-gen::generate(size) in
         Request of {method, path, fields, body}
@@ -35,7 +34,6 @@ constant requests: gen(request) {
     shrink = {
       function (req) {
         let Request of {method, path, fields, body} = req in
-        // let tup = Pair(method, Pair(path, Pair(protocol-version, Pair(fields, body)))) in
         let tup = Pair(method, Pair(path, Pair(fields, body))) in
         let cands = _tuple-requests::shrink(tup) in
         for-each(cands, function (cand) {
