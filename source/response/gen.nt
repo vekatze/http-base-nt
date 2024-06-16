@@ -6,7 +6,7 @@ import {
   this.header.gen {headers},
   this.private.gen {Config, adjusted-texts},
   this.response {Response, response},
-  this.response.show,
+  this.response.show.v1-1,
 }
 
 constant _field-body-pair: gen(pair(header, text)) {
@@ -39,6 +39,6 @@ constant responses: gen(response) {
         })
       }
     },
-    viewer = this.response.show.as-show,
+    viewer = this.response.show.v1-1.as-show,
   }
 }

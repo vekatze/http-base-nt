@@ -7,7 +7,7 @@ import {
   this.request {Request, request},
   this.request-method {request-method},
   this.request-method.gen {request-methods},
-  this.request.show,
+  this.request.show.v1-1,
 }
 
 constant _tuple-requests: gen(pair(request-method, pair(text, pair(header, text)))) {
@@ -44,6 +44,6 @@ constant requests: gen(request) {
         })
       }
     },
-    viewer = this.request.show.as-show,
+    viewer = this.request.show.v1-1.as-show,
   }
 }
