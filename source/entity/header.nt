@@ -1,0 +1,7 @@
+import {
+  this.entity.field {field},
+}
+
+constant header: type {
+  list(field)
+}

@@ -1,0 +1,11 @@
+data request-method {
+| GET
+| HEAD
+| POST
+| PUT
+| DELETE
+| OPTIONS
+| TRACE
+| PATCH
+| UNKNOWN
+}

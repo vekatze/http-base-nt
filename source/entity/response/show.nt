@@ -1,0 +1,33 @@
+import {
+  core.text {join},
+  this.entity.response {Response, response},
+  this.entity.header.show {show-header},
+}
+
+define _get-status-code-text(code: int): &text {
+  match code {
+  | 200 =>
+    "OK"
+  | 400 =>
+    "Bad Request"
+  | 500 =>
+    "Internal Server Error"
+  | _ =>
+    "UNKNOWN"
+  }
+}
+
+define show-response(resp: response): text {
+  let Response of {protocol-version, status-code, fields, body} = resp in
+  join([
+    protocol-version,
+    *" ",
+    %ld(status-code),
+    *" ",
+    *_get-status-code-text(status-code),
+    *"\r\n",
+    show-header(fields),
+    *"\r\n",
+    body,
+  ])
+}

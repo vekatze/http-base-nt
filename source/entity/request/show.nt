@@ -1,0 +1,26 @@
+import {
+  core.show {Show, show},
+  core.text {join},
+  this.entity.header.show {show-header},
+  this.entity.request {Request, request},
+  this.entity.request-method.show {show-request-method},
+}
+
+define show-request(r: request): text {
+  let Request of {method, path, protocol-version, fields, body} = r in
+  join([
+    show-request-method(method),
+    *" ",
+    path,
+    *" ",
+    protocol-version,
+    *"\r\n",
+    show-header(fields),
+    *"\r\n",
+    body,
+  ])
+}
+
+constant as-show: show(request) {
+  Show of {show = show-request}
+}

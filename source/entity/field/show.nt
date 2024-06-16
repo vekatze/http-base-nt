@@ -1,0 +1,14 @@
+import {
+  core.show {Show, show},
+  core.text {join},
+  this.entity.field {Field, field},
+}
+
+define show-field(h: field): text {
+  let Field of {key, value} = h in
+  join([key, *": ", value])
+}
+
+constant as-show: show(field) {
+  Show of {show = show-field}
+}

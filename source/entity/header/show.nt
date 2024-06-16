@@ -1,0 +1,16 @@
+import {
+  core.show {Show, show},
+  core.text {intercalate, join},
+  this.entity.field.show {show-field},
+  this.entity.header {header},
+}
+
+define show-header(fields: header): text {
+  let ts = map(show-field, fields) in
+  let k = intercalate(*"\r\n", ts) in
+  join([k, *"\r\n"])
+}
+
+constant as-show: show(header) {
+  Show of {show = show-header}
+}

@@ -1,0 +1,42 @@
+import {
+  core.show {Show, show},
+  this.entity.request-method {
+    DELETE,
+    GET,
+    HEAD,
+    OPTIONS,
+    PATCH,
+    POST,
+    PUT,
+    TRACE,
+    UNKNOWN,
+    request-method,
+  },
+}
+
+define show-request-method(rm: request-method): text {
+  match rm {
+  | GET =>
+    *"GET"
+  | HEAD =>
+    *"HEAD"
+  | POST =>
+    *"POST"
+  | PUT =>
+    *"PUT"
+  | DELETE =>
+    *"DELETE"
+  | OPTIONS =>
+    *"OPTIONS"
+  | TRACE =>
+    *"TRACE"
+  | PATCH =>
+    *"PATCH"
+  | UNKNOWN =>
+    *"__UNKNOWN__"
+  }
+}
+
+constant as-show: show(request-method) {
+  Show of {show = show-request-method}
+}

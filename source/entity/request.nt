@@ -1,0 +1,14 @@
+import {
+  this.entity.header {header},
+  this.entity.request-method {request-method},
+}
+
+data request {
+| Request(
+    method: request-method,
+    path: text,
+    protocol-version: text,
+    fields: header,
+    body: text,
+  )
+}

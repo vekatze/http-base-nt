@@ -1,0 +1,6 @@
+data field {
+| Field(
+    key: text,
+    value: text,
+  )
+}
