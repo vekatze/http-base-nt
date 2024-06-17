@@ -10,8 +10,8 @@ define show-header(fields: header): text {
   if eq-int(len, 0) {
     *""
   } else {
-    let ts = map(show-field, fields) in
-    let k = intercalate(*"\r\n", ts) in
+    let ts = for-each(fields, show-field) in
+    let k = intercalate(ts, *"\r\n") in
     join([k, *"\r\n"])
   }
 }

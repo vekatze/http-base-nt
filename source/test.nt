@@ -1,5 +1,5 @@
 import {
-  core.text {split-on},
+  core.text {split},
   noa.suite {noa},
   this.request {request},
   this.request.gen {requests},
@@ -34,7 +34,7 @@ define main(): unit {
     requests,
     function (!r: request) {
       pin req-text = show-request(!r) in
-      pin segments = split-on("\r\n\r\n", req-text) in
+      pin segments = split(req-text, "\r\n\r\n") in
       ge-int(length(segments), 2)
     },
   );
@@ -58,7 +58,7 @@ define main(): unit {
     responses,
     function (!r: response) {
       pin req-text = show-response(!r) in
-      pin segments = split-on("\r\n\r\n", req-text) in
+      pin segments = split(req-text, "\r\n\r\n") in
       ge-int(length(segments), 2)
     },
   );

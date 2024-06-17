@@ -1,7 +1,7 @@
 import {
   core.control {grow},
   core.int {max-int},
-  core.list {filter, map-N},
+  core.list {filter},
   core.list.eq,
   core.random {random},
   core.rune.show,
@@ -29,7 +29,7 @@ inline _adjusted-runes(!c: _config): gen(rune) {
       define loop(size) {
         pin cand = runes::generate(size) in
         pin bk = !c::blacklist in
-        let b = _list-rune-eq::member(cand, bk) in
+        let b = _list-rune-eq::member(bk, cand) in
         if b {
           loop(size)
         } else {
@@ -40,14 +40,10 @@ inline _adjusted-runes(!c: _config): gen(rune) {
     shrink = {
       function (v) {
         let cands = runes::shrink(v) in
-        filter(
-          function (cand) {
-            pin cand = cand in
-            pin bk = !c::blacklist in
-            not(_list-rune-eq::member(cand, bk))
-          },
-          cands,
-        )
+        filter(cands, function (cand) {
+          pin bk = !c::blacklist in
+          not(_list-rune-eq::member(bk, cand))
+        })
       }
     },
     viewer = core.rune.show.as-show,
@@ -74,15 +70,11 @@ inline _adjusted-texts(!c: _config): gen(text) {
         pin t = t in
         let rune-seq = unpack(t) in
         pin rune-lists = _shrink-list(!rune-gen)(rune-seq) in
-        let result = map-N(pack, rune-lists) in
-        filter(
-          function (t) {
-            let len on t = core.text.length(t) in
-            let _ = t in
-            ge-int(len, !c::min-length)
-          },
-          result,
-        )
+        let result = for-each-N(rune-lists, pack) in
+        filter(result, function (t) {
+          let len = core.text.length(t) in
+          ge-int(len, !c::min-length)
+        })
       }
     },
     viewer = core.text.show.as-show,
