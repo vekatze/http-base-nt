@@ -1,15 +1,7 @@
 import {
-  core.control {grow},
-  core.int {max-int},
-  core.list {filter},
   core.list.eq,
-  core.random {random},
-  core.rune.show,
-  core.text {join, pack, unpack},
-  core.text.show,
-  noa.gen {Gen, gen},
-  noa.gen.lists {_shrink-list},
-  noa.gen.runes {runes},
+  noa.gen {gen},
+  noa.gen.custom.texts {Config, texts},
 }
 
 data _config {
@@ -23,60 +15,17 @@ constant _list-rune-eq: core.list.eq.trope(rune) {
   core.list.eq.from-eq(core.rune.eq.as-eq-N)
 }
 
-inline _adjusted-runes(!c: _config): gen(rune) {
-  Gen of {
-    generate = {
-      define loop(size) {
-        pin cand = runes::generate(size) in
-        pin bk = !c::blacklist in
-        let b = _list-rune-eq::member(bk, cand) in
-        if b {
-          loop(size)
-        } else {
-          *cand
-        }
-      }
-    },
-    shrink = {
-      function (v) {
-        let cands = runes::shrink(v) in
-        filter(cands, function (cand) {
-          pin bk = !c::blacklist in
-          not(_list-rune-eq::member(bk, cand))
-        })
-      }
-    },
-    viewer = core.rune.show.as-show,
-  }
-}
-
 inline _adjusted-texts(!c: _config): gen(text) {
-  let !rune-gen = _adjusted-runes(!c) in
-  Gen of {
-    generate = {
-      function (size) {
-        let text-len = max-int(random(size), !c::min-length) in
-        let tmp =
-          grow([], text-len, function (acc, _) {
-            let r = !rune-gen::generate(size) in
-            Cons(core.text.singleton(r), acc)
-          })
-        in
-        join(tmp)
+  texts(Config of {
+    min-length = !c::min-length,
+    max-length = none(),
+    rune-generator = none(),
+    rune-acceptor = {
+      function (r) {
+        pin bk = !c::blacklist in
+        pin r = r in
+        not(_list-rune-eq::member(bk, r))
       }
     },
-    shrink = {
-      function (t: text) {
-        pin t = t in
-        let rune-seq = unpack(t) in
-        pin rune-lists = _shrink-list(!rune-gen)(rune-seq) in
-        let result = for-each-N(rune-lists, pack) in
-        filter(result, function (t) {
-          let len = core.text.length(t) in
-          ge-int(len, !c::min-length)
-        })
-      }
-    },
-    viewer = core.text.show.as-show,
-  }
+  })
 }

@@ -19,9 +19,9 @@
       ],
     },
     noa {
-      digest "tUj_sybDt_HZZKGnG_XFHDR2Qh1zLDwnmTkwUfDZc60",
+      digest "M_Iq-tzrN-m__gExRxHtQEZDo8pK4Vlyge3asJtriRE",
       mirror [
-        "https://github.com/vekatze/noa/raw/main/archive/0-3-12.tar.zst",
+        "https://github.com/vekatze/noa/raw/main/archive/0-3-13.tar.zst",
       ],
     },
   },
