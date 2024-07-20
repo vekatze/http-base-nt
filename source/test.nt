@@ -26,7 +26,7 @@ define main(): unit {
         eq-text(req-text-1, req-text-2)
       | Left(_) =>
         False
-      };
+      }
     },
   );
   noa::check(
@@ -50,7 +50,7 @@ define main(): unit {
         eq-text(req-text-1, req-text-2)
       | Left(_) =>
         False
-      };
+      }
     },
   );
   noa::check(
@@ -61,7 +61,7 @@ define main(): unit {
       pin segments = split(req-text, "\r\n\r\n") in
       ge-int(length(segments), 2)
     },
-  );
+  )
 }
 
 define zen(): unit {
