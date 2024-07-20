@@ -13,15 +13,15 @@
       enable-preset true,
     },
     zonk {
-      digest "qHuQZ6l2yVBt_8ZZgp2V7AV2RqX51b53mF39iF1vAys",
+      digest "SOgzy0iQvJzd0Ke6B5LwCto-yO8i7fkfGCtZdFg_Ua8",
       mirror [
-        "https://github.com/vekatze/zonk/raw/main/archive/0-1-15.tar.zst",
+        "https://github.com/vekatze/zonk/raw/main/archive/0-1-16.tar.zst",
       ],
     },
     noa {
-      digest "d_WAv-n2aUzi2Omn_5hQMc5ZJQVPRXwhO5di2fHJ9Jc",
+      digest "tD3YBT4UDBCtdCttK_QztfWLuA0JsIzQmyb36dVdQuo",
       mirror [
-        "https://github.com/vekatze/noa/raw/main/archive/0-3-15.tar.zst",
+        "https://github.com/vekatze/noa/raw/main/archive/0-3-16.tar.zst",
       ],
     },
   },
