@@ -1,17 +1,30 @@
 import {
   this.field {Field, field},
-  this.private.parse {_http-line-break, _is-colon, _skip-space, _symbol},
-  zonk.parser {chunk, not-followed-by, parser, return, take-while, zonk},
+  this.private.parse {_is-colon, _skip-space, _until-newline},
+  zonk.parser {chunk, not-followed-by, optional, parser, return, take-while, zonk},
+}
+
+define _field-value-parser(acc: list(text)): parser(text) {
+  with zonk {
+    bind new-fragment = _until-newline() in
+    bind _ = chunk("\r") in
+    bind none-or-newline = optional(chunk("\n")) in
+    match none-or-newline {
+    | Left(_) =>
+      _field-value-parser(append(acc, [new-fragment, *"\r"]))
+    | Right(_) =>
+      return(core.text.join(append(acc, [new-fragment])))
+    }
+  }
 }
 
 define field-parser(): parser(field) {
   with zonk {
-    bind _ = not-followed-by(chunk("\r")) in
+    bind _ = not-followed-by(chunk("\r\n")) in
     bind key = take-while(compose(not, _is-colon)) in
     bind _ = chunk(":") in
     bind _ = _skip-space in
-    bind value = _symbol() in
-    bind _ = _http-line-break() in
+    bind value = _field-value-parser([]) in
     return(Field of {key, value})
   }
 }
