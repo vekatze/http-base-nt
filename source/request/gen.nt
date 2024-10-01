@@ -1,4 +1,5 @@
 import {
+  core.list {for-each},
   noa.gen {Gen, gen},
   noa.gen.pairs {pairs},
   this.header {header},

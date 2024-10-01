@@ -1,4 +1,5 @@
 import {
+  core.int.show {show-int},
   core.show {Show, show},
   core.text {join},
   this.header.show {show-header},
@@ -23,7 +24,7 @@ define show-response(resp: response): text {
   join([
     *"HTTP/1.1",
     *" ",
-    %ld(status-code),
+    show-int(status-code),
     *" ",
     *_get-status-code-text(status-code),
     *"\r\n",

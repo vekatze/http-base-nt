@@ -1,4 +1,6 @@
 import {
+  core.function {compose},
+  core.list {append},
   this.field {Field, field},
   this.private.parse {_is-colon, _skip-space, _until-newline},
   zonk.parser {chunk, not-followed-by, optional, parser, return, take-while, zonk},

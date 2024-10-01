@@ -1,4 +1,5 @@
 import {
+  core.list {for-each},
   core.random {random-in-range},
   noa.gen {Gen, gen},
   noa.gen.pairs {pairs},

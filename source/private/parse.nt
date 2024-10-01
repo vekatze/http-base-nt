@@ -1,4 +1,5 @@
 import {
+  core.function {compose},
   zonk.parser {chunk, drop-while, parser, take-while},
 }
 

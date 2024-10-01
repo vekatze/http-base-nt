@@ -1,4 +1,5 @@
 import {
+  core.int.show {show-int},
   core.text {text-byte-length},
   this.field {Field},
   this.header {header},
@@ -16,7 +17,7 @@ define text-response(status-code: int, body: text) {
   let len on body = text-byte-length(body) in
   Response of {
     status-code,
-    fields = [Field(*"content-length", %ld(len))],
+    fields = [Field(*"content-length", show-int(len))],
     body,
   }
 }
