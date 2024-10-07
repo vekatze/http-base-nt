@@ -5,5 +5,5 @@
 ## Installation
 
 ```sh
-neut get http-base https://github.com/vekatze/dotenv-nt/raw/main/archive/0-1-13.tar.zst
+neut get http-base https://github.com/vekatze/http-base-nt/raw/main/archive/0-1-13.tar.zst
 ```
