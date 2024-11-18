@@ -1,6 +1,6 @@
 import {
   core.list {for-each},
-  core.random {random-in-range},
+  core.random {random-in-range-int},
   noa.gen {Gen, gen},
   noa.gen.pairs {pairs},
   this.header {header},
@@ -24,7 +24,7 @@ constant responses: gen(response) {
   Gen of {
     generate = {
       function (size) {
-        let status-code = random-in-range(100, 999) in
+        let status-code = random-in-range-int(100, 999) in
         let fields = headers::generate(size) in
         let body = !text-gen::generate(size) in
         Response of {status-code, fields, body}

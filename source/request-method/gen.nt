@@ -1,5 +1,5 @@
 import {
-  core.random {random-in-range},
+  core.random {random-in-range-int},
   noa.gen {Gen, gen},
   this.request-method {
     DELETE,
@@ -19,7 +19,7 @@ constant request-methods: gen(request-method) {
   Gen of {
     generate = {
       function (_) {
-        let dice = random-in-range(0, 7) in
+        let dice = random-in-range-int(0, 7) in
         match dice {
         | 0 =>
           GET
