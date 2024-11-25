@@ -5,7 +5,7 @@
 ## Installation
 
 ```sh
-neut get http-base https://github.com/vekatze/http-base-nt/raw/main/archive/0-1-18.tar.zst
+neut get http-base https://github.com/vekatze/http-base-nt/raw/main/archive/0-1-19.tar.zst
 ```
 
 ## Types
