@@ -34,6 +34,6 @@ define show-request-method(rm: request-method): text {
   }
 }
 
-constant as-show: show(request-method) {
+inline as-show: show(request-method) {
   Show of {show = show-request-method}
 }

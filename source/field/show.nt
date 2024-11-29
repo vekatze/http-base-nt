@@ -9,6 +9,6 @@ define show-field(h: field): text {
   join([key, *": ", value])
 }
 
-constant as-show: show(field) {
+inline as-show: show(field) {
   Show of {show = show-field}
 }

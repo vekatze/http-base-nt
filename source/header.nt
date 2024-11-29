@@ -2,6 +2,6 @@ import {
   this.field {field},
 }
 
-constant header: type {
+inline header: type {
   list(field)
 }

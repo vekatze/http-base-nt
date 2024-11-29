@@ -17,7 +17,7 @@ define _is-colon(r: rune): bool {
   eq-rune(r, `:`)
 }
 
-constant _skip-space: parser(unit) {
+inline _skip-space: parser(unit) {
   drop-while(_is-space)
 }
 

@@ -11,15 +11,15 @@ data _config {
   )
 }
 
-constant _list-rune-eq: core.list.eq.trope(rune) {
+inline _list-rune-eq: core.list.eq.trope(rune) {
   core.list.eq.from-eq(core.rune.eq.as-eq-N)
 }
 
 inline _adjusted-texts(!c: _config): gen(text) {
   texts(Config of {
     min-length = !c::min-length,
-    max-length = none(),
-    rune-generator = none(),
+    max-length = none,
+    rune-generator = none,
     rune-acceptor = {
       function (r) {
         pin bk = !c::blacklist in

@@ -15,7 +15,7 @@ import {
   this.request-method.show,
 }
 
-constant request-methods: gen(request-method) {
+inline request-methods: gen(request-method) {
   Gen of {
     generate = {
       function (_) {

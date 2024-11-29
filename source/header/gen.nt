@@ -5,6 +5,6 @@ import {
   this.header {header},
 }
 
-constant headers: gen(header) {
+inline headers: gen(header) {
   lists(fields)
 }

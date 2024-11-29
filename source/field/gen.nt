@@ -7,14 +7,14 @@ import {
   this.private.gen {_Config, _adjusted-texts},
 }
 
-constant _kvs: gen(pair(text, text)) {
+inline _kvs: gen(pair(text, text)) {
   let rune-blacklist = [` `, `\u{8}`, `\u{9}`, `\u{a}`, `\u{b}`, `\u{c}`, `\u{d}`, `:`] in
   let c = _Config of {blacklist = rune-blacklist, min-length = 1} in
   let !text-gen = _adjusted-texts(c) in
   pairs(!text-gen, !text-gen)
 }
 
-constant fields: gen(field) {
+inline fields: gen(field) {
   Gen of {
     generate = {
       function (size) {

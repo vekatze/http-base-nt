@@ -34,6 +34,6 @@ define show-response(resp: response): text {
   ])
 }
 
-constant as-show: show(response) {
+inline as-show: show(response) {
   Show of {show = show-response}
 }

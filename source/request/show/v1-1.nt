@@ -21,6 +21,6 @@ define show-request(r: request): text {
   ])
 }
 
-constant as-show: show(request) {
+inline as-show: show(request) {
   Show of {show = show-request}
 }
