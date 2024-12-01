@@ -45,7 +45,7 @@ data request-method {
 }
 
 // Represents an HTTP header.
-constant header: type {
+inline header: type {
   list(field)
 }
 
