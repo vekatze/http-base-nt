@@ -12,9 +12,9 @@ define _field-value-parser(acc: list(text)): parser(text) {
     bind _ = chunk("\r") in
     bind none-or-newline = optional(chunk("\n")) in
     match none-or-newline {
-    | Error(_) =>
+    | Left(_) =>
       _field-value-parser(append(acc, [new-fragment, *"\r"]))
-    | OK(_) =>
+    | Right(_) =>
       return(core.text.join(append(acc, [new-fragment])))
     }
   }

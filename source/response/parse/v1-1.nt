@@ -13,9 +13,9 @@ define _status-code(): parser(int) {
     let status-code-or-none on status-code-text = parse-int(status-code-text) in
     let _ = status-code-text in
     match status-code-or-none {
-    | OK(v) =>
+    | Right(v) =>
       return(v)
-    | Error(_) =>
+    | Left(_) =>
       fail([Label("status code")])
     }
   }

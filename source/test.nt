@@ -22,10 +22,10 @@ define main(): unit {
       pin req-text-1 = show-request(!r) in
       pin st = new-state(*req-text-1) in
       match run(request-parser(), st) {
-      | OK(req) =>
+      | Right(req) =>
         pin req-text-2 = show-request(req) in
         eq-text(req-text-1, req-text-2)
-      | Error(_) =>
+      | Left(_) =>
         False
       }
     },
@@ -46,10 +46,10 @@ define main(): unit {
       pin req-text-1 = show-response(!r) in
       pin st = new-state(*req-text-1) in
       match run(response-parser(), st) {
-      | OK(req) =>
+      | Right(req) =>
         pin req-text-2 = show-response(req) in
         eq-text(req-text-1, req-text-2)
-      | Error(_) =>
+      | Left(_) =>
         False
       }
     },

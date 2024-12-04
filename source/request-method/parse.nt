@@ -20,30 +20,30 @@ define request-method-parser(): parser(request-method) {
     bind method-text = _symbol() in
     let method-or-none on method-text =
       if eq-text(method-text, "GET") {
-        OK(GET)
+        Right(GET)
       } else-if eq-text(method-text, "HEAD") {
-        OK(HEAD)
+        Right(HEAD)
       } else-if eq-text(method-text, "POST") {
-        OK(POST)
+        Right(POST)
       } else-if eq-text(method-text, "PUT") {
-        OK(PUT)
+        Right(PUT)
       } else-if eq-text(method-text, "DELETE") {
-        OK(DELETE)
+        Right(DELETE)
       } else-if eq-text(method-text, "OPTIONS") {
-        OK(OPTIONS)
+        Right(OPTIONS)
       } else-if eq-text(method-text, "TRACE") {
-        OK(TRACE)
+        Right(TRACE)
       } else-if eq-text(method-text, "PATCH") {
-        OK(PATCH)
+        Right(PATCH)
       } else {
-        Error(Unit)
+        Left(Unit)
       }
     in
     let _ = method-text in
     match method-or-none {
-    | OK(method) =>
+    | Right(method) =>
       return(method)
-    | Error(_) =>
+    | Left(_) =>
       fail([Label("request method")])
     }
   }
