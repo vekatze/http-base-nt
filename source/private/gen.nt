@@ -1,5 +1,5 @@
 import {
-  core.list.eq,
+  core.list.eq {Trope},
   noa.gen {gen},
   noa.gen.custom.texts {Config, texts},
 }
@@ -16,15 +16,17 @@ inline _list-rune-eq: core.list.eq.trope(rune) {
 }
 
 inline _adjusted-texts(!c: _config): gen(text) {
+  let _Config of {min-length, blacklist} = !c in
   texts(Config of {
-    min-length = !c::min-length,
+    min-length,
     max-length = none,
     rune-generator = none,
     rune-acceptor = {
       function (r) {
-        pin bk = !c::blacklist in
+        pin bk = blacklist in
         pin r = r in
-        not(_list-rune-eq::member(bk, r))
+        let Trope of {member} = _list-rune-eq in
+        not(member(bk, r))
       }
     },
   })

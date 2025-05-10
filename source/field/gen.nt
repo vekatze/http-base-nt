@@ -15,17 +15,18 @@ inline _kvs: gen(pair(text, text)) {
 }
 
 inline fields: gen(field) {
+  let Gen of {generate, shrink} = _kvs in
   Gen of {
     generate = {
       function (size) {
-        let Pair(key, value) = _kvs::generate(size) in
+        let Pair(key, value) = generate(size) in
         Field of {key, value}
       }
     },
     shrink = {
       function (f: field) {
         let Field of {key, value} = f in
-        let cands = _kvs::shrink(Pair(key, value)) in
+        let cands = shrink(Pair(key, value)) in
         for-each(cands, function (p) {
           let Pair(key, value) = p in
           Field of {key, value}

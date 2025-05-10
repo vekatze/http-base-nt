@@ -1,7 +1,7 @@
 import {
   core.list {length},
   core.text {split},
-  noa.suite {noa},
+  noa.suite {Trope, noa},
   this.request {request},
   this.request.gen {requests},
   this.request.parse.v1-1 {request-parser},
@@ -15,7 +15,8 @@ import {
 }
 
 define main(): unit {
-  noa::check(
+  let Trope of {check = !check} = noa in
+  !check(
     "∀ (r: request). show(parse(show(r))) == show(r)",
     requests,
     function (!r: request) {
@@ -30,7 +31,7 @@ define main(): unit {
       }
     },
   );
-  noa::check(
+  !check(
     "∀ (r: request). `show(r)` contains at least one empty line",
     requests,
     function (!r: request) {
@@ -39,7 +40,7 @@ define main(): unit {
       ge-int(length(segments), 2)
     },
   );
-  noa::check(
+  !check(
     "∀ (r: response). show(parse(show(r))) == show(r)",
     responses,
     function (!r: response) {
@@ -54,7 +55,7 @@ define main(): unit {
       }
     },
   );
-  noa::check(
+  !check(
     "∀ (r: response). `show(r)` contains at least one empty line",
     responses,
     function (!r: response) {
