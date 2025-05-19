@@ -63,11 +63,11 @@ data field {
 ```neut
 // A parser for an HTTP/1.1 request.
 // You can run this parser using `zonk.parser.run`.
-define request-parser(): parser(request)
+define request-parser: parser(request)
 
 // A parser for an HTTP/1.1 response.
 // You can run this parser using `zonk.parser.run`
-define response-parser(): parser(response)
+define response-parser: parser(response)
 
 // Formats a request as an HTTP/1.1 request.
 define show-request(r: request): text
