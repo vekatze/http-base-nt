@@ -3,38 +3,37 @@ import {
   this.header.parse {header-parser},
   this.private.parse {_http-line-break, _is-status-code-number, _read-all, _skip-space, _symbol, _until-newline},
   this.response {Response, response},
-  zonk.parser {fail, parser, return, take-while, zonk},
-  zonk.tag {Label},
+  zonk.move.parse {report-unexpected-input, take-while, zonk},
 }
 
-define _status-code(): parser(int) {
-  with zonk {
-    bind status-code-text = take-while(_is-status-code-number) in
+define _status-code: zonk(int) {
+  function (k) {
+    try status-code-text = take-while(_is-status-code-number)(k) in
     let status-code-or-none on status-code-text = parse-int(status-code-text) in
     let _ = status-code-text in
     match status-code-or-none {
     | Right(v) =>
-      return(v)
+      Right(v)
     | Left(_) =>
-      fail([Label("status code")])
+      report-unexpected-input("status code")
     }
   }
 }
 
-define response-parser(): parser(response) {
-  with zonk {
-    bind protocol-version = _symbol() in
+define response-parser: zonk(response) {
+  function (k) {
+    try protocol-version = _symbol(k) in
     let _ = protocol-version in
-    bind _ = _skip-space in
-    bind status-code = _status-code() in
-    bind _ = _skip-space in
-    bind reason-phrase = _until-newline() in
+    try _ = _skip-space(k) in
+    try status-code = _status-code(k) in
+    try _ = _skip-space(k) in
+    try reason-phrase = _until-newline(k) in
     let _ = reason-phrase in
-    bind _ = _http-line-break() in
-    bind fields = header-parser() in
-    bind _ = _http-line-break() in
-    bind body = _read-all() in
-    return(
+    try _ = _http-line-break(k) in
+    try fields = header-parser()(k) in
+    try _ = _http-line-break(k) in
+    try body = _read-all(k) in
+    Right(
       Response of {
         status-code,
         fields,

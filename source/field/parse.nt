@@ -3,30 +3,29 @@ import {
   core.list {append},
   this.field {Field, field},
   this.private.parse {_is-colon, _skip-space, _until-newline},
-  zonk.parser {chunk, not-followed-by, optional, parser, return, take-while, zonk},
+  zonk.move.parse {chunk, not-followed-by, optional, parsed, take-while, zonk},
+  zonk.rule.zonk-kit {zonk-kit},
 }
 
-define _field-value-parser(acc: list(text)): parser(text) {
-  with zonk {
-    bind new-fragment = _until-newline() in
-    bind _ = chunk("\r") in
-    bind none-or-newline = optional(chunk("\n")) in
-    match none-or-newline {
-    | Left(_) =>
-      _field-value-parser(append(acc, [new-fragment, *"\r"]))
-    | Right(_) =>
-      return(core.text.join(append(acc, [new-fragment])))
-    }
+define _field-value-parser(k: &zonk-kit, acc: list(text)): parsed(text) {
+  try new-fragment = _until-newline(k) in
+  try _ = chunk("\r")(k) in
+  try none-or-newline = optional(chunk("\n"))(k) in
+  match none-or-newline {
+  | Left(_) =>
+    _field-value-parser(k, append(acc, [new-fragment, *"\r"]))
+  | Right(_) =>
+    Right(core.text.join(append(acc, [new-fragment])))
   }
 }
 
-define field-parser(): parser(field) {
-  with zonk {
-    bind _ = not-followed-by(chunk("\r\n")) in
-    bind key = take-while(compose(not, _is-colon)) in
-    bind _ = chunk(":") in
-    bind _ = _skip-space in
-    bind value = _field-value-parser([]) in
-    return(Field of {key, value})
+define field-parser: zonk(field) {
+  function (k) {
+    try _ = not-followed-by("newline", chunk("\r\n"))(k) in
+    try key = take-while(compose(not, _is-colon))(k) in
+    try _ = chunk(":")(k) in
+    try _ = _skip-space(k) in
+    try value = _field-value-parser(k, []) in
+    Right(Field of {key, value})
   }
 }

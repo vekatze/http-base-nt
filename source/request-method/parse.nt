@@ -11,13 +11,12 @@ import {
     TRACE,
     request-method,
   },
-  zonk.parser {fail, parser, return, zonk},
-  zonk.tag {Label},
+  zonk.move.parse {report-unexpected-input, zonk},
 }
 
-define request-method-parser(): parser(request-method) {
-  with zonk {
-    bind method-text = _symbol() in
+define request-method-parser: zonk(request-method) {
+  function (k) {
+    try method-text = _symbol(k) in
     let method-or-none on method-text =
       if eq-text(method-text, "GET") {
         Right(GET)
@@ -42,9 +41,9 @@ define request-method-parser(): parser(request-method) {
     let _ = method-text in
     match method-or-none {
     | Right(method) =>
-      return(method)
+      Right(method)
     | Left(_) =>
-      fail([Label("request method")])
+      report-unexpected-input("request method")
     }
   }
 }

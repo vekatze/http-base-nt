@@ -10,8 +10,7 @@ import {
   this.response.gen {responses},
   this.response.parse.v1-1 {response-parser},
   this.response.show.v1-1 {show-response},
-  zonk.parser {run},
-  zonk.state {new-state},
+  zonk.move.make-zonk-kit {make-zonk-kit},
 }
 
 define main(): unit {
@@ -21,8 +20,8 @@ define main(): unit {
     requests,
     function (!r: request) {
       pin req-text-1 = show-request(!r) in
-      pin st = new-state(*req-text-1) in
-      match run(request-parser(), st) {
+      pin k = make-zonk-kit(*req-text-1) in
+      match request-parser(k) {
       | Right(req) =>
         pin req-text-2 = show-request(req) in
         eq-text(req-text-1, req-text-2)
@@ -45,8 +44,8 @@ define main(): unit {
     responses,
     function (!r: response) {
       pin req-text-1 = show-response(!r) in
-      pin st = new-state(*req-text-1) in
-      match run(response-parser(), st) {
+      pin k = make-zonk-kit(*req-text-1) in
+      match response-parser(k) {
       | Right(req) =>
         pin req-text-2 = show-response(req) in
         eq-text(req-text-1, req-text-2)

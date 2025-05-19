@@ -1,6 +1,6 @@
 import {
   core.function {compose},
-  zonk.parser {chunk, drop-while, parser, take-while},
+  zonk.move.parse {chunk, drop-while, take-while, zonk},
 }
 
 define _is-space(r: rune): bool {
@@ -17,25 +17,25 @@ define _is-colon(r: rune): bool {
   eq-rune(r, `:`)
 }
 
-inline _skip-space: parser(unit) {
+inline _skip-space: zonk(unit) {
   drop-while(_is-space)
 }
 
-define _symbol(): parser(text) {
+define _symbol: zonk(text) {
   take-while(compose(not, _is-space))
 }
 
-define _until-newline(): parser(text) {
+define _until-newline: zonk(text) {
   take-while(function (r) {
     ne-rune(r, `\r`)
   })
 }
 
-define _http-line-break(): parser(unit) {
+define _http-line-break: zonk(unit) {
   chunk("\r\n")
 }
 
-define _read-all(): parser(text) {
+define _read-all: zonk(text) {
   take-while(function (_) {
     True
   })
