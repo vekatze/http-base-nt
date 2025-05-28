@@ -1,10 +1,10 @@
 import {
-  noa.gen {gen},
-  noa.gen.lists {lists},
-  this.field.gen {fields},
+  noa.move.gen.list {list-gen},
+  noa.rule.gen {gen},
+  this.field.gen {field-gen},
   this.header {header},
 }
 
-inline headers: gen(header) {
-  lists(fields)
+inline header-gen: gen(header) {
+  list-gen(field-gen)
 }

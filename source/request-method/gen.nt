@@ -1,6 +1,6 @@
 import {
   core.random {random-in-range-int},
-  noa.gen {Gen, gen},
+  noa.rule.gen {Gen, gen},
   this.request-method {
     DELETE,
     GET,
@@ -15,7 +15,7 @@ import {
   this.request-method.show,
 }
 
-inline request-methods: gen(request-method) {
+inline request-method-gen: gen(request-method) {
   Gen of {
     generate = {
       function (_) {

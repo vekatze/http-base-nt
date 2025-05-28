@@ -1,7 +1,7 @@
 import {
   core.list.eq {Trope},
-  noa.gen {gen},
-  noa.gen.custom.texts {Config, texts},
+  noa.move.gen.custom.text {Config, text-gen},
+  noa.rule.gen {gen},
 }
 
 data _config {
@@ -15,9 +15,9 @@ inline _list-rune-eq: core.list.eq.trope(rune) {
   core.list.eq.from-eq(core.rune.eq.as-eq-N)
 }
 
-inline _adjusted-texts(!c: _config): gen(text) {
+inline _adjusted-text-gen(!c: _config): gen(text) {
   let _Config of {min-length, blacklist} = !c in
-  texts(Config of {
+  text-gen(Config of {
     min-length,
     max-length = none,
     rune-generator = none,

@@ -1,11 +1,11 @@
 import {
   core.list {for-each},
   core.random {random-in-range-int},
-  noa.gen {Gen, gen},
-  noa.gen.pairs {pairs},
+  noa.move.gen.pair {pair-gen},
+  noa.rule.gen {Gen, gen},
   this.header {header},
-  this.header.gen {headers},
-  this.private.gen {_Config, _adjusted-texts},
+  this.header.gen {header-gen},
+  this.private.gen {_Config, _adjusted-text-gen},
   this.response {Response, response},
   this.response.show.v1-1,
 }
@@ -13,15 +13,15 @@ import {
 inline _field-body-pair: gen(pair(header, text)) {
   let rune-blacklist = [` `, `\u{8}`, `\u{9}`, `\u{a}`, `\u{b}`, `\u{c}`, `\u{d}`] in
   let c = _Config of {blacklist = rune-blacklist, min-length = 1} in
-  let text-gen = _adjusted-texts(c) in
-  pairs(headers, text-gen)
+  let text-gen = _adjusted-text-gen(c) in
+  pair-gen(header-gen, text-gen)
 }
 
-inline responses: gen(response) {
+inline response-gen: gen(response) {
   let rune-blacklist = [` `, `\u{8}`, `\u{9}`, `\u{a}`, `\u{b}`, `\u{c}`, `\u{d}`] in
   let c = _Config of {blacklist = rune-blacklist, min-length = 1} in
-  let !text-gen = _adjusted-texts(c) in
-  let Gen of {generate = generate-header} = headers in
+  let !text-gen = _adjusted-text-gen(c) in
+  let Gen of {generate = generate-header} = header-gen in
   let Gen of {generate = generate-text} = !text-gen in
   let Gen of {shrink = shrink-pair} = _field-body-pair in
   Gen of {

@@ -1,23 +1,25 @@
 import {
   core.list {length},
   core.text {split},
-  noa.suite {Trope, noa},
+  noa.move.check {check},
+  noa.move.make-noa-kit {make-default-noa-kit},
   this.request {request},
-  this.request.gen {requests},
+  this.request.gen {request-gen},
   this.request.parse.v1-1 {request-parser},
   this.request.show.v1-1 {show-request},
   this.response {response},
-  this.response.gen {responses},
+  this.response.gen {response-gen},
   this.response.parse.v1-1 {response-parser},
   this.response.show.v1-1 {show-response},
   zonk.move.make-zonk-kit {make-zonk-kit},
 }
 
 define main(): unit {
-  let Trope of {check = !check} = noa in
-  !check(
+  pin k = make-default-noa-kit() in
+  check(
+    k,
     "∀ (r: request). show(parse(show(r))) == show(r)",
-    requests,
+    request-gen,
     function (!r: request) {
       pin req-text-1 = show-request(!r) in
       pin k = make-zonk-kit(*req-text-1) in
@@ -30,18 +32,20 @@ define main(): unit {
       }
     },
   );
-  !check(
+  check(
+    k,
     "∀ (r: request). `show(r)` contains at least one empty line",
-    requests,
+    request-gen,
     function (!r: request) {
       pin req-text = show-request(!r) in
       pin segments = split(req-text, "\r\n\r\n") in
       ge-int(length(segments), 2)
     },
   );
-  !check(
+  check(
+    k,
     "∀ (r: response). show(parse(show(r))) == show(r)",
-    responses,
+    response-gen,
     function (!r: response) {
       pin req-text-1 = show-response(!r) in
       pin k = make-zonk-kit(*req-text-1) in
@@ -54,9 +58,10 @@ define main(): unit {
       }
     },
   );
-  !check(
+  check(
+    k,
     "∀ (r: response). `show(r)` contains at least one empty line",
-    responses,
+    response-gen,
     function (!r: response) {
       pin req-text = show-response(!r) in
       pin segments = split(req-text, "\r\n\r\n") in
