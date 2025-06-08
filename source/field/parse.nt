@@ -8,9 +8,9 @@ import {
 }
 
 define _field-value-parser(k: &zonk-kit, acc: list(text)): parsed(text) {
-  try new-fragment = _until-newline(k) in
-  try _ = chunk("\r")(k) in
-  try none-or-newline = optional(chunk("\n"))(k) in
+  try new-fragment = _until-newline(k);
+  try _ = chunk("\r")(k);
+  try none-or-newline = optional(chunk("\n"))(k);
   match none-or-newline {
   | Left(_) =>
     _field-value-parser(k, append(acc, [new-fragment, *"\r"]))
@@ -21,11 +21,11 @@ define _field-value-parser(k: &zonk-kit, acc: list(text)): parsed(text) {
 
 define field-parser: zonk(field) {
   function (k) {
-    try _ = not-followed-by("newline", chunk("\r\n"))(k) in
-    try key = take-while(compose(not, _is-colon))(k) in
-    try _ = chunk(":")(k) in
-    try _ = _skip-space(k) in
-    try value = _field-value-parser(k, []) in
+    try _ = not-followed-by("newline", chunk("\r\n"))(k);
+    try key = take-while(compose(not, _is-colon))(k);
+    try _ = chunk(":")(k);
+    try _ = _skip-space(k);
+    try value = _field-value-parser(k, []);
     Right(Field of {key, value})
   }
 }

@@ -17,9 +17,9 @@ import {
 
 inline request-method-gen: gen(request-method) {
   Gen of {
-    generate = {
+    generate := {
       function (_) {
-        let dice = random-in-range-int(0, 7) in
+        let dice = random-in-range-int(0, 7);
         match dice {
         | 0 =>
           GET
@@ -40,7 +40,7 @@ inline request-method-gen: gen(request-method) {
         }
       }
     },
-    shrink = {
+    shrink := {
       function (m) {
         match m {
         | GET =>
@@ -50,6 +50,6 @@ inline request-method-gen: gen(request-method) {
         }
       }
     },
-    viewer = this.request-method.show.as-show,
+    viewer := this.request-method.show.as-show,
   }
 }

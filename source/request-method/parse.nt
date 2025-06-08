@@ -16,7 +16,7 @@ import {
 
 define request-method-parser: zonk(request-method) {
   function (k) {
-    try method-text = _symbol(k) in
+    try method-text = _symbol(k);
     let method-or-none on method-text =
       if eq-text(method-text, "GET") {
         Right(GET)
@@ -36,9 +36,8 @@ define request-method-parser: zonk(request-method) {
         Right(PATCH)
       } else {
         Left(Unit)
-      }
-    in
-    let _ = method-text in
+      };
+    let _ = method-text;
     match method-or-none {
     | Right(method) =>
       Right(method)

@@ -7,7 +7,7 @@ import {
 }
 
 define show-request(r: request): text {
-  let Request of {method, path, fields, body} = r in
+  let Request of {method, path, fields, body} = r;
   join([
     show-request-method(method),
     *" ",
@@ -22,5 +22,5 @@ define show-request(r: request): text {
 }
 
 inline as-show: show(request) {
-  Show of {show = show-request}
+  Show of {show := show-request}
 }

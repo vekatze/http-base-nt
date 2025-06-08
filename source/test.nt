@@ -15,17 +15,17 @@ import {
 }
 
 define main(): unit {
-  pin k = make-default-noa-kit() in
+  pin k = make-default-noa-kit();
   check(
     k,
     "∀ (r: request). show(parse(show(r))) == show(r)",
     request-gen,
     function (!r: request) {
-      pin req-text-1 = show-request(!r) in
-      pin k = make-zonk-kit(*req-text-1) in
+      pin req-text-1 = show-request(!r);
+      pin k = make-zonk-kit(*req-text-1);
       match request-parser(k) {
       | Right(req) =>
-        pin req-text-2 = show-request(req) in
+        pin req-text-2 = show-request(req);
         eq-text(req-text-1, req-text-2)
       | Left(_) =>
         False
@@ -37,8 +37,8 @@ define main(): unit {
     "∀ (r: request). `show(r)` contains at least one empty line",
     request-gen,
     function (!r: request) {
-      pin req-text = show-request(!r) in
-      pin segments = split(req-text, "\r\n\r\n") in
+      pin req-text = show-request(!r);
+      pin segments = split(req-text, "\r\n\r\n");
       ge-int(length(segments), 2)
     },
   );
@@ -47,11 +47,11 @@ define main(): unit {
     "∀ (r: response). show(parse(show(r))) == show(r)",
     response-gen,
     function (!r: response) {
-      pin req-text-1 = show-response(!r) in
-      pin k = make-zonk-kit(*req-text-1) in
+      pin req-text-1 = show-response(!r);
+      pin k = make-zonk-kit(*req-text-1);
       match response-parser(k) {
       | Right(req) =>
-        pin req-text-2 = show-response(req) in
+        pin req-text-2 = show-response(req);
         eq-text(req-text-1, req-text-2)
       | Left(_) =>
         False
@@ -63,8 +63,8 @@ define main(): unit {
     "∀ (r: response). `show(r)` contains at least one empty line",
     response-gen,
     function (!r: response) {
-      pin req-text = show-response(!r) in
-      pin segments = split(req-text, "\r\n\r\n") in
+      pin req-text = show-response(!r);
+      pin segments = split(req-text, "\r\n\r\n");
       ge-int(length(segments), 2)
     },
   )

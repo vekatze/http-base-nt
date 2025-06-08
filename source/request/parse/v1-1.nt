@@ -8,16 +8,16 @@ import {
 
 define request-parser: zonk(request) {
   function (k) {
-    try method = request-method-parser(k) in
-    try _ = _skip-space(k) in
-    try path = _symbol(k) in
-    try _ = _skip-space(k) in
-    try protocol-version = _symbol(k) in
-    let _ = protocol-version in
-    try _ = _http-line-break(k) in
-    try fields = header-parser()(k) in
-    try _ = _http-line-break(k) in
-    try body = _read-all(k) in
+    try method = request-method-parser(k);
+    try _ = _skip-space(k);
+    try path = _symbol(k);
+    try _ = _skip-space(k);
+    try protocol-version = _symbol(k);
+    let _ = protocol-version;
+    try _ = _http-line-break(k);
+    try fields = header-parser()(k);
+    try _ = _http-line-break(k);
+    try body = _read-all(k);
     Right(
       Request of {
         method,

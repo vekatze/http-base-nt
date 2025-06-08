@@ -7,16 +7,16 @@ import {
 }
 
 define show-header(fields: header): text {
-  let len on fields = length(fields) in
+  let len on fields = length(fields);
   if eq-int(len, 0) {
     *""
   } else {
-    let ts = for-each(fields, show-field) in
-    let k = intercalate(ts, *"\r\n") in
+    let ts = for-each(fields, show-field);
+    let k = intercalate(ts, *"\r\n");
     join([k, *"\r\n"])
   }
 }
 
 inline as-show: show(header) {
-  Show of {show = show-header}
+  Show of {show := show-header}
 }

@@ -8,31 +8,31 @@ import {
 }
 
 inline _kvs: gen(pair(text, text)) {
-  let rune-blacklist = [` `, `\u{8}`, `\u{9}`, `\u{a}`, `\u{b}`, `\u{c}`, `\u{d}`, `:`] in
-  let c = _Config of {blacklist = rune-blacklist, min-length = 1} in
-  let !text-gen = _adjusted-text-gen(c) in
+  let rune-blacklist = [` `, `\u{8}`, `\u{9}`, `\u{a}`, `\u{b}`, `\u{c}`, `\u{d}`, `:`];
+  let c = _Config of {blacklist := rune-blacklist, min-length := 1};
+  let !text-gen = _adjusted-text-gen(c);
   pair-gen(!text-gen, !text-gen)
 }
 
 inline field-gen: gen(field) {
-  let Gen of {generate, shrink} = _kvs in
+  let Gen of {generate, shrink} = _kvs;
   Gen of {
-    generate = {
+    generate := {
       function (size) {
-        let Pair(key, value) = generate(size) in
+        let Pair(key, value) = generate(size);
         Field of {key, value}
       }
     },
-    shrink = {
+    shrink := {
       function (f: field) {
-        let Field of {key, value} = f in
-        let cands = shrink(Pair(key, value)) in
+        let Field of {key, value} = f;
+        let cands = shrink(Pair(key, value));
         for-each(cands, function (p) {
-          let Pair(key, value) = p in
+          let Pair(key, value) = p;
           Field of {key, value}
         })
       }
     },
-    viewer = this.field.show.as-show,
+    viewer := this.field.show.as-show,
   }
 }

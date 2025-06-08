@@ -11,38 +11,38 @@ import {
 }
 
 inline _field-body-pair: gen(pair(header, text)) {
-  let rune-blacklist = [` `, `\u{8}`, `\u{9}`, `\u{a}`, `\u{b}`, `\u{c}`, `\u{d}`] in
-  let c = _Config of {blacklist = rune-blacklist, min-length = 1} in
-  let text-gen = _adjusted-text-gen(c) in
+  let rune-blacklist = [` `, `\u{8}`, `\u{9}`, `\u{a}`, `\u{b}`, `\u{c}`, `\u{d}`];
+  let c = _Config of {blacklist := rune-blacklist, min-length := 1};
+  let text-gen = _adjusted-text-gen(c);
   pair-gen(header-gen, text-gen)
 }
 
 inline response-gen: gen(response) {
-  let rune-blacklist = [` `, `\u{8}`, `\u{9}`, `\u{a}`, `\u{b}`, `\u{c}`, `\u{d}`] in
-  let c = _Config of {blacklist = rune-blacklist, min-length = 1} in
-  let !text-gen = _adjusted-text-gen(c) in
-  let Gen of {generate = generate-header} = header-gen in
-  let Gen of {generate = generate-text} = !text-gen in
-  let Gen of {shrink = shrink-pair} = _field-body-pair in
+  let rune-blacklist = [` `, `\u{8}`, `\u{9}`, `\u{a}`, `\u{b}`, `\u{c}`, `\u{d}`];
+  let c = _Config of {blacklist := rune-blacklist, min-length := 1};
+  let !text-gen = _adjusted-text-gen(c);
+  let Gen of {generate := generate-header} = header-gen;
+  let Gen of {generate := generate-text} = !text-gen;
+  let Gen of {shrink := shrink-pair} = _field-body-pair;
   Gen of {
-    generate = {
+    generate := {
       function (size) {
-        let status-code = random-in-range-int(100, 999) in
-        let fields = generate-header(size) in
-        let body = generate-text(size) in
+        let status-code = random-in-range-int(100, 999);
+        let fields = generate-header(size);
+        let body = generate-text(size);
         Response of {status-code, fields, body}
       }
     },
-    shrink = {
+    shrink := {
       function (req) {
-        let Response of {status-code, fields, body} = req in
-        let cands = shrink-pair(Pair(fields, body)) in
+        let Response of {status-code, fields, body} = req;
+        let cands = shrink-pair(Pair(fields, body));
         for-each(cands, function (cand) {
-          let Pair(fields, body) = cand in
+          let Pair(fields, body) = cand;
           Response of {status-code, fields, body}
         })
       }
     },
-    viewer = this.response.show.v1-1.as-show,
+    viewer := this.response.show.v1-1.as-show,
   }
 }
