@@ -8,7 +8,7 @@ import {
 
 define show-request(r: request): text {
   let Request of {method, path, fields, body} = r;
-  join([
+  join(List[
     show-request-method(method),
     *" ",
     path,

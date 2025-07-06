@@ -11,14 +11,14 @@ import {
 }
 
 inline _field-body-pair: gen(pair(header, text)) {
-  let rune-blacklist = [` `, `\u{8}`, `\u{9}`, `\u{a}`, `\u{b}`, `\u{c}`, `\u{d}`];
+  let rune-blacklist = List[` `, `\u{8}`, `\u{9}`, `\u{a}`, `\u{b}`, `\u{c}`, `\u{d}`];
   let c = _Config of {blacklist := rune-blacklist, min-length := 1};
   let text-gen = _adjusted-text-gen(c);
   pair-gen(header-gen, text-gen)
 }
 
 inline response-gen: gen(response) {
-  let rune-blacklist = [` `, `\u{8}`, `\u{9}`, `\u{a}`, `\u{b}`, `\u{c}`, `\u{d}`];
+  let rune-blacklist = List[` `, `\u{8}`, `\u{9}`, `\u{a}`, `\u{b}`, `\u{c}`, `\u{d}`];
   let c = _Config of {blacklist := rune-blacklist, min-length := 1};
   let !text-gen = _adjusted-text-gen(c);
   let Gen of {generate := generate-header} = header-gen;

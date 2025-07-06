@@ -13,7 +13,7 @@ define show-header(fields: header): text {
   } else {
     let ts = for-each(fields, show-field);
     let k = intercalate(ts, *"\r\n");
-    join([k, *"\r\n"])
+    join(List[k, *"\r\n"])
   }
 }
 

@@ -21,7 +21,7 @@ define _get-status-code-text(code: int): &text {
 
 define show-response(resp: response): text {
   let Response of {status-code, fields, body} = resp;
-  join([
+  join(List[
     *"HTTP/1.1",
     *" ",
     show-int(status-code),

@@ -12,14 +12,14 @@ import {
 }
 
 inline _tuple-requests: gen(pair(request-method, pair(text, pair(header, text)))) {
-  let rune-blacklist = [` `, `\u{8}`, `\u{9}`, `\u{a}`, `\u{b}`, `\u{c}`, `\u{d}`];
+  let rune-blacklist = List[` `, `\u{8}`, `\u{9}`, `\u{a}`, `\u{b}`, `\u{c}`, `\u{d}`];
   let c = _Config of {blacklist := rune-blacklist, min-length := 1};
   let !text-gen = _adjusted-text-gen(c);
   pair-gen(request-method-gen, pair-gen(!text-gen, pair-gen(header-gen, !text-gen)))
 }
 
 inline request-gen: gen(request) {
-  let rune-blacklist = [` `, `\u{8}`, `\u{9}`, `\u{a}`, `\u{b}`, `\u{c}`, `\u{d}`];
+  let rune-blacklist = List[` `, `\u{8}`, `\u{9}`, `\u{a}`, `\u{b}`, `\u{c}`, `\u{d}`];
   let c = _Config of {blacklist := rune-blacklist, min-length := 1};
   let !text-gen = _adjusted-text-gen(c);
   let Gen of {generate} = request-method-gen;

@@ -44,9 +44,9 @@ inline request-method-gen: gen(request-method) {
       function (m) {
         match m {
         | GET =>
-          []
+          List[]
         | _ =>
-          [GET]
+          List[GET]
         }
       }
     },
