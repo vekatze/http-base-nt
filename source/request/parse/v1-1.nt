@@ -3,7 +3,7 @@ import {
   this.private.parse {_http-line-break, _read-all, _skip-space, _symbol},
   this.request {Request, request},
   this.request-method.parse {request-method-parser},
-  zonk.move.parse {zonk},
+  zonk.parse {zonk},
 }
 
 define request-parser: zonk(request) {

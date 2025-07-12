@@ -1,6 +1,6 @@
 import {
-  noa.move.gen.list {list-gen},
-  noa.rule.gen {gen},
+  noa.gen {gen},
+  noa.gen.list {list-gen},
   this.field.gen {field-gen},
   this.header {header},
 }

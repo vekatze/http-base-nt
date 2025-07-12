@@ -1,13 +1,12 @@
 import {
   core.list {for-each},
   core.random {random-in-range-int},
-  noa.move.gen.pair {pair-gen},
-  noa.rule.gen {Gen, gen},
+  noa.gen {Gen, gen},
+  noa.gen.pair {pair-gen},
   this.header {header},
   this.header.gen {header-gen},
   this.private.gen {_Config, _adjusted-text-gen},
   this.response {Response, response},
-  this.response.show.v1-1,
 }
 
 inline _field-body-pair: gen(pair(header, text)) {
@@ -43,6 +42,5 @@ inline response-gen: gen(response) {
         })
       }
     },
-    viewer := this.response.show.v1-1.as-show,
   }
 }

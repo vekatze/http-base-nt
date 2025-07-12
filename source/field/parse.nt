@@ -3,8 +3,8 @@ import {
   core.list {append},
   this.field {Field, field},
   this.private.parse {_is-colon, _skip-space, _until-newline},
-  zonk.move.parse {chunk, not-followed-by, optional, parsed, take-while, zonk},
-  zonk.rule.zonk-kit {zonk-kit},
+  zonk.parse {chunk, not-followed-by, optional, parsed, take-while, zonk},
+  zonk.zonk-kit {zonk-kit},
 }
 
 define _field-value-parser(k: &zonk-kit, acc: list(text)): parsed(text) {

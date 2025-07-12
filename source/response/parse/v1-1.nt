@@ -3,7 +3,7 @@ import {
   this.header.parse {header-parser},
   this.private.parse {_http-line-break, _is-status-code-number, _read-all, _skip-space, _symbol, _until-newline},
   this.response {Response, response},
-  zonk.move.parse {report-unexpected-input, take-while, zonk},
+  zonk.parse {report-unexpected-input, take-while, zonk},
 }
 
 define _status-code: zonk(int) {

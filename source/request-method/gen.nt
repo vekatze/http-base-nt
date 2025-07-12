@@ -1,6 +1,6 @@
 import {
   core.random {random-in-range-int},
-  noa.rule.gen {Gen, gen},
+  noa.gen {Gen, gen},
   this.request-method {
     DELETE,
     GET,
@@ -12,7 +12,6 @@ import {
     TRACE,
     request-method,
   },
-  this.request-method.show,
 }
 
 inline request-method-gen: gen(request-method) {
@@ -50,6 +49,5 @@ inline request-method-gen: gen(request-method) {
         }
       }
     },
-    viewer := this.request-method.show.as-show,
   }
 }

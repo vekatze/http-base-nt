@@ -1,8 +1,8 @@
 import {
   core.list {length},
   core.text {split},
-  noa.move.check {check},
-  noa.move.make-noa-kit {make-default-noa-kit},
+  noa.check {check},
+  noa.make-noa-kit {make-default-noa-kit},
   this.request {request},
   this.request.gen {request-gen},
   this.request.parse.v1-1 {request-parser},
@@ -11,7 +11,7 @@ import {
   this.response.gen {response-gen},
   this.response.parse.v1-1 {response-parser},
   this.response.show.v1-1 {show-response},
-  zonk.move.make-zonk-kit {make-zonk-kit},
+  zonk.make-zonk-kit {make-zonk-kit},
 }
 
 define main(): unit {

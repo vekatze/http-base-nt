@@ -1,9 +1,8 @@
 import {
   core.list {for-each},
-  noa.move.gen.pair {pair-gen},
-  noa.rule.gen {Gen, gen},
+  noa.gen {Gen, gen},
+  noa.gen.pair {pair-gen},
   this.field {Field, field},
-  this.field.show,
   this.private.gen {_Config, _adjusted-text-gen},
 }
 
@@ -33,6 +32,5 @@ inline field-gen: gen(field) {
         })
       }
     },
-    viewer := this.field.show.as-show,
   }
 }

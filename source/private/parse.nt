@@ -1,6 +1,6 @@
 import {
   core.function {compose},
-  zonk.move.parse {chunk, drop-while, take-while, zonk},
+  zonk.parse {chunk, drop-while, take-while, zonk},
 }
 
 define _is-space(r: rune): bool {

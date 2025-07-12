@@ -1,7 +1,7 @@
 import {
   core.list.eq {member},
-  noa.move.gen.custom.text {Config, text-gen},
-  noa.rule.gen {gen},
+  noa.gen {gen},
+  noa.gen.custom.text {Config, text-gen},
 }
 
 data _config {

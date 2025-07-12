@@ -1,14 +1,13 @@
 import {
   core.list {for-each},
-  noa.move.gen.pair {pair-gen},
-  noa.rule.gen {Gen, gen},
+  noa.gen {Gen, gen},
+  noa.gen.pair {pair-gen},
   this.header {header},
   this.header.gen {header-gen},
   this.private.gen {_Config, _adjusted-text-gen},
   this.request {Request, request},
   this.request-method {request-method},
   this.request-method.gen {request-method-gen},
-  this.request.show.v1-1,
 }
 
 inline _tuple-requests: gen(pair(request-method, pair(text, pair(header, text)))) {
@@ -47,6 +46,5 @@ inline request-gen: gen(request) {
         })
       }
     },
-    viewer := this.request.show.v1-1.as-show,
   }
 }
