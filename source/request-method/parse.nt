@@ -14,7 +14,7 @@ import {
   zonk.parse {report-unexpected-input, zonk},
 }
 
-define request-method-parser: zonk(request-method) {
+define request-method-parser<c>: zonk(c, request-method) {
   function (k) {
     try method-text = _symbol(k);
     let method-or-none on method-text =

@@ -6,7 +6,7 @@ import {
   zonk.parse {report-unexpected-input, take-while, zonk},
 }
 
-define _status-code: zonk(int) {
+define _status-code<c>: zonk(c, int) {
   function (k) {
     try status-code-text = take-while(_is-status-code-number)(k);
     let status-code-or-none on status-code-text = parse-int(status-code-text);
@@ -20,7 +20,7 @@ define _status-code: zonk(int) {
   }
 }
 
-define response-parser: zonk(response) {
+define response-parser<c>: zonk(c, response) {
   function (k) {
     try protocol-version = _symbol(k);
     let _ = protocol-version;

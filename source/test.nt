@@ -16,13 +16,13 @@ import {
 
 define main(): unit {
   pin k = make-default-noa-kit();
-  check(
+  check::(
     k,
     "∀ (r: request). show(parse(show(r))) == show(r)",
     request-gen,
     function (!r: request) {
       pin req-text-1 = show-request(!r);
-      pin k = make-zonk-kit(*req-text-1);
+      pin k = make-zonk-kit(*req-text-1, Unit);
       match request-parser(k) {
       | Right(req) =>
         pin req-text-2 = show-request(req);
@@ -32,7 +32,7 @@ define main(): unit {
       }
     },
   );
-  check(
+  check::(
     k,
     "∀ (r: request). `show(r)` contains at least one empty line",
     request-gen,
@@ -42,13 +42,13 @@ define main(): unit {
       ge-int(length(segments), 2)
     },
   );
-  check(
+  check::(
     k,
     "∀ (r: response). show(parse(show(r))) == show(r)",
     response-gen,
     function (!r: response) {
       pin req-text-1 = show-response(!r);
-      pin k = make-zonk-kit(*req-text-1);
+      pin k = make-zonk-kit(*req-text-1, Unit);
       match response-parser(k) {
       | Right(req) =>
         pin req-text-2 = show-response(req);
@@ -58,7 +58,7 @@ define main(): unit {
       }
     },
   );
-  check(
+  check::(
     k,
     "∀ (r: response). `show(r)` contains at least one empty line",
     response-gen,

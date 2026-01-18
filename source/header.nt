@@ -2,6 +2,6 @@ import {
   this.field {field},
 }
 
-inline header: type {
+alias header {
   list(field)
 }

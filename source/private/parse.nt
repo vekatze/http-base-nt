@@ -17,25 +17,25 @@ define _is-colon(r: rune): bool {
   eq-rune(r, `:`)
 }
 
-inline _skip-space: zonk(unit) {
+inline _skip-space<c>: zonk(c, unit) {
   drop-while(_is-space)
 }
 
-define _symbol: zonk(text) {
+define _symbol<c>: zonk(c, text) {
   take-while(compose(not, _is-space))
 }
 
-define _until-newline: zonk(text) {
+define _until-newline<c>: zonk(c, text) {
   take-while(function (r) {
     ne-rune(r, `\r`)
   })
 }
 
-define _http-line-break: zonk(unit) {
+define _http-line-break<c>: zonk(c, unit) {
   chunk("\r\n")
 }
 
-define _read-all: zonk(text) {
+define _read-all<c>: zonk(c, text) {
   take-while(function (_) {
     True
   })

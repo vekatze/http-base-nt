@@ -4,6 +4,6 @@ import {
   zonk.parse {many, zonk},
 }
 
-define header-parser(): zonk(header) {
+define header-parser<c>(): zonk(c, header) {
   many(field-parser)
 }

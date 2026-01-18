@@ -6,7 +6,7 @@ import {
   zonk.parse {zonk},
 }
 
-define request-parser: zonk(request) {
+define request-parser<c>: zonk(c, request) {
   function (k) {
     try method = request-method-parser(k);
     try _ = _skip-space(k);
