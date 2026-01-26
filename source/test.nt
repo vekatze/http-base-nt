@@ -21,7 +21,7 @@ define main(): unit {
     "∀ (r: request). show(parse(show(r))) == show(r)",
     request-gen,
     function (!r: request) {
-      pin req-text-1 = show-request(!r);
+      pin req-text-1 = show-request(r);
       pin k = make-zonk-kit(*req-text-1, Unit);
       match request-parser(k) {
       | Right(req) =>
@@ -37,7 +37,7 @@ define main(): unit {
     "∀ (r: request). `show(r)` contains at least one empty line",
     request-gen,
     function (!r: request) {
-      pin req-text = show-request(!r);
+      pin req-text = show-request(r);
       pin segments = split(req-text, "\r\n\r\n");
       ge-int(length(segments), 2)
     },
@@ -47,7 +47,7 @@ define main(): unit {
     "∀ (r: response). show(parse(show(r))) == show(r)",
     response-gen,
     function (!r: response) {
-      pin req-text-1 = show-response(!r);
+      pin req-text-1 = show-response(r);
       pin k = make-zonk-kit(*req-text-1, Unit);
       match response-parser(k) {
       | Right(req) =>
@@ -63,7 +63,7 @@ define main(): unit {
     "∀ (r: response). `show(r)` contains at least one empty line",
     response-gen,
     function (!r: response) {
-      pin req-text = show-response(!r);
+      pin req-text = show-response(r);
       pin segments = split(req-text, "\r\n\r\n");
       ge-int(length(segments), 2)
     },

@@ -35,5 +35,5 @@ define show-request-method(rm: request-method): text {
 }
 
 inline as-show: show(request-method) {
-  Show of {show := show-request-method}
+  Show{show := show-request-method}
 }

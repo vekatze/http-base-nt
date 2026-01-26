@@ -5,10 +5,10 @@ import {
 }
 
 define show-field(h: field): text {
-  let Field of {key, value} = h;
+  let Field{key, value} = h;
   join(List[key, *": ", value])
 }
 
 inline as-show: show(field) {
-  Show of {show := show-field}
+  Show{show := show-field}
 }

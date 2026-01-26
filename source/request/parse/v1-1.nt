@@ -19,7 +19,7 @@ define request-parser<c>: zonk(c, request) {
     try _ = _http-line-break(k);
     try body = _read-all(k);
     Right(
-      Request of {
+      Request{
         method,
         path,
         fields,

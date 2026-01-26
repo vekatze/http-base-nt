@@ -26,6 +26,6 @@ define field-parser<c>: zonk(c, field) {
     try _ = chunk(":")(k);
     try _ = _skip-space(k);
     try value = _field-value-parser(k, Nil);
-    Right(Field of {key, value})
+    Right(Field{key, value})
   }
 }

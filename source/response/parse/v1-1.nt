@@ -34,7 +34,7 @@ define response-parser<c>: zonk(c, response) {
     try _ = _http-line-break(k);
     try body = _read-all(k);
     Right(
-      Response of {
+      Response{
         status-code,
         fields,
         body,

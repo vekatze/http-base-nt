@@ -18,5 +18,5 @@ define show-header(fields: header): text {
 }
 
 inline as-show: show(header) {
-  Show of {show := show-header}
+  Show{show := show-header}
 }

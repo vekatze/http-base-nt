@@ -15,7 +15,7 @@ import {
 }
 
 inline request-method-gen: gen(request-method) {
-  Gen of {
+  Gen{
     generate := {
       function (_) {
         let dice = random-in-range-int(0, 7);

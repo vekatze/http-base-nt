@@ -12,8 +12,8 @@ data _config {
 }
 
 inline _adjusted-text-gen(!c: _config): gen(text) {
-  let _Config of {min-length, blacklist} = !c;
-  text-gen(Config of {
+  let _Config{min-length, blacklist} = c;
+  text-gen(Config{
     min-length,
     max-length := none,
     rune-generator := none,
