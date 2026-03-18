@@ -3,7 +3,7 @@ import {
   zonk.parse {chunk, drop-while, take-while, zonk},
 }
 
-define _is-space(r: rune): bool {
+define _is-space(r: rune) -> bool {
   if eq-rune(r, ` `) {
     True
   } else-if and(le-rune(`\u{9}`, r), le-rune(r, `\u{d}`)) {
@@ -13,34 +13,34 @@ define _is-space(r: rune): bool {
   }
 }
 
-define _is-colon(r: rune): bool {
+define _is-colon(r: rune) -> bool {
   eq-rune(r, `:`)
 }
 
-inline _skip-space<c>: zonk(c, unit) {
+constant _skip-space<c>: zonk(c, unit) {
   drop-while(_is-space)
 }
 
-define _symbol<c>: zonk(c, text) {
+constant _symbol<c>: zonk(c, text) {
   take-while(compose(not, _is-space))
 }
 
-define _until-newline<c>: zonk(c, text) {
+constant _until-newline<c>: zonk(c, text) {
   take-while(function (r) {
     ne-rune(r, `\r`)
   })
 }
 
-define _http-line-break<c>: zonk(c, unit) {
+constant _http-line-break<c>: zonk(c, unit) {
   chunk("\r\n")
 }
 
-define _read-all<c>: zonk(c, text) {
+constant _read-all<c>: zonk(c, text) {
   take-while(function (_) {
     True
   })
 }
 
-define _is-status-code-number(r: rune): bool {
+define _is-status-code-number(r: rune) -> bool {
   and(le-rune(`0`, r), le-rune(r, `9`))
 }

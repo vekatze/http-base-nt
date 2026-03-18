@@ -5,6 +5,6 @@ import {
   this.header {header},
 }
 
-inline header-gen: gen(header) {
+constant header-gen: gen(header) {
   list-gen(field-gen)
 }

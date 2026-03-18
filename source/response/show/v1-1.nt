@@ -6,7 +6,7 @@ import {
   this.response {Response, response},
 }
 
-define _get-status-code-text(code: int): &text {
+define _get-status-code-text(code: int) -> &text {
   match code {
   | 200 =>
     "OK"
@@ -19,7 +19,7 @@ define _get-status-code-text(code: int): &text {
   }
 }
 
-define show-response(resp: response): text {
+define show-response(resp: response) -> text {
   let Response{status-code, fields, body} = resp;
   join(List[
     *"HTTP/1.1",
@@ -34,6 +34,6 @@ define show-response(resp: response): text {
   ])
 }
 
-inline as-show: show(response) {
+constant as-show: show(response) {
   Show{show := show-response}
 }

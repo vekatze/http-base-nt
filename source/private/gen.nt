@@ -11,7 +11,7 @@ data _config {
   )
 }
 
-inline _adjusted-text-gen(!c: _config): gen(text) {
+inline _adjusted-text-gen(!c: _config) -> gen(text) {
   let _Config{min-length, blacklist} = c;
   text-gen(Config{
     min-length,

@@ -6,7 +6,7 @@ import {
   this.header {header},
 }
 
-define show-header(fields: header): text {
+define show-header(fields: header) -> text {
   let len on fields = length(fields);
   if eq-int(len, 0) {
     *""
@@ -17,6 +17,6 @@ define show-header(fields: header): text {
   }
 }
 
-inline as-show: show(header) {
+constant as-show: show(header) {
   Show{show := show-header}
 }

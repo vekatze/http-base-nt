@@ -13,7 +13,7 @@ data response {
   )
 }
 
-define text-response(status-code: int, body: text) {
+define text-response(status-code: int, body: text) -> response {
   let len on body = text-byte-length(body);
   Response{
     status-code,

@@ -6,7 +6,7 @@ import {
   this.request-method.show {show-request-method},
 }
 
-define show-request(r: request): text {
+define show-request(r: request) -> text {
   let Request{method, path, fields, body} = r;
   join(List[
     show-request-method(method),
@@ -21,6 +21,6 @@ define show-request(r: request): text {
   ])
 }
 
-inline as-show: show(request) {
+constant as-show: show(request) {
   Show{show := show-request}
 }

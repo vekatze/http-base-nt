@@ -14,7 +14,7 @@ import {
   },
 }
 
-inline request-method-gen: gen(request-method) {
+constant request-method-gen: gen(request-method) {
   Gen{
     generate := {
       function (_) {
