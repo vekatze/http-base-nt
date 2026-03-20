@@ -15,7 +15,7 @@ data response {
 
 define text-response(status-code: int, body: text) -> response {
   let len on body = text-byte-length(body);
-  Response{
+  Response {
     status-code,
     fields := List[Field(*"content-length", show-int(len))],
     body,

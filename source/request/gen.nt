@@ -12,37 +12,37 @@ import {
 
 constant _tuple-requests: gen(pair(request-method, pair(text, pair(header, text)))) {
   let rune-blacklist = List[` `, `\u{8}`, `\u{9}`, `\u{a}`, `\u{b}`, `\u{c}`, `\u{d}`];
-  let c = _Config{blacklist := rune-blacklist, min-length := 1};
+  let c = _Config {blacklist := rune-blacklist, min-length := 1};
   let !text-gen = _adjusted-text-gen(c);
   pair-gen(request-method-gen, pair-gen(text-gen, pair-gen(header-gen, text-gen)))
 }
 
 constant request-gen: gen(request) {
   let rune-blacklist = List[` `, `\u{8}`, `\u{9}`, `\u{a}`, `\u{b}`, `\u{c}`, `\u{d}`];
-  let c = _Config{blacklist := rune-blacklist, min-length := 1};
+  let c = _Config {blacklist := rune-blacklist, min-length := 1};
   let !text-gen = _adjusted-text-gen(c);
-  let Gen{generate} = request-method-gen;
-  let Gen{generate := !generate-text} = text-gen;
-  let Gen{generate := !generate-header} = header-gen;
-  let Gen{shrink := !shrink-tuple} = _tuple-requests;
-  Gen{
+  let Gen {generate} = request-method-gen;
+  let Gen {generate := !generate-text} = text-gen;
+  let Gen {generate := !generate-header} = header-gen;
+  let Gen {shrink := !shrink-tuple} = _tuple-requests;
+  Gen {
     generate := {
-      function (size) {
+      (size) => {
         let method = generate(size);
         let path = generate-text(size);
         let fields = generate-header(size);
         let body = generate-text(size);
-        Request{method, path, fields, body}
+        Request {method, path, fields, body}
       }
     },
     shrink := {
-      function (req) {
-        let Request{method, path, fields, body} = req;
+      (req) => {
+        let Request {method, path, fields, body} = req;
         let tup = Pair(method, Pair(path, Pair(fields, body)));
         let cands = shrink-tuple(tup);
-        for-each(cands, function (cand) {
+        for-each(cands, (cand) => {
           let Pair(method, Pair(path, Pair(fields, body))) = cand;
-          Request{method, path, fields, body}
+          Request {method, path, fields, body}
         })
       }
     },

@@ -11,34 +11,34 @@ import {
 
 constant _field-body-pair: gen(pair(header, text)) {
   let rune-blacklist = List[` `, `\u{8}`, `\u{9}`, `\u{a}`, `\u{b}`, `\u{c}`, `\u{d}`];
-  let c = _Config{blacklist := rune-blacklist, min-length := 1};
+  let c = _Config {blacklist := rune-blacklist, min-length := 1};
   let text-gen = _adjusted-text-gen(c);
   pair-gen(header-gen, text-gen)
 }
 
 constant response-gen: gen(response) {
   let rune-blacklist = List[` `, `\u{8}`, `\u{9}`, `\u{a}`, `\u{b}`, `\u{c}`, `\u{d}`];
-  let c = _Config{blacklist := rune-blacklist, min-length := 1};
+  let c = _Config {blacklist := rune-blacklist, min-length := 1};
   let !text-gen = _adjusted-text-gen(c);
-  let Gen{generate := generate-header} = header-gen;
-  let Gen{generate := generate-text} = text-gen;
-  let Gen{shrink := shrink-pair} = _field-body-pair;
-  Gen{
+  let Gen {generate := generate-header} = header-gen;
+  let Gen {generate := generate-text} = text-gen;
+  let Gen {shrink := shrink-pair} = _field-body-pair;
+  Gen {
     generate := {
-      function (size) {
+      (size) => {
         let status-code = random-in-range-int(100, 999);
         let fields = generate-header(size);
         let body = generate-text(size);
-        Response{status-code, fields, body}
+        Response {status-code, fields, body}
       }
     },
     shrink := {
-      function (req) {
-        let Response{status-code, fields, body} = req;
+      (req) => {
+        let Response {status-code, fields, body} = req;
         let cands = shrink-pair(Pair(fields, body));
-        for-each(cands, function (cand) {
+        for-each(cands, (cand) => {
           let Pair(fields, body) = cand;
-          Response{status-code, fields, body}
+          Response {status-code, fields, body}
         })
       }
     },

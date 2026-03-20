@@ -18,5 +18,5 @@ define show-header(fields: header) -> text {
 }
 
 constant as-show: show(header) {
-  Show{show := show-header}
+  Show {show := show-header}
 }

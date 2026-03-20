@@ -26,7 +26,7 @@ constant _symbol<c>: zonk(c, text) {
 }
 
 constant _until-newline<c>: zonk(c, text) {
-  take-while(function (r) {
+  take-while((r) => {
     ne-rune(r, `\r`)
   })
 }
@@ -36,7 +36,7 @@ constant _http-line-break<c>: zonk(c, unit) {
 }
 
 constant _read-all<c>: zonk(c, text) {
-  take-while(function (_) {
+  take-while((_) => {
     True
   })
 }

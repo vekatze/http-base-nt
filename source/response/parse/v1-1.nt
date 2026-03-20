@@ -7,7 +7,7 @@ import {
 }
 
 constant _status-code<c>: zonk(c, int) {
-  function (k) {
+  (k) => {
     try status-code-text = take-while(_is-status-code-number)(k);
     let status-code-or-none on status-code-text = parse-int(status-code-text);
     let _ = status-code-text;
@@ -21,7 +21,7 @@ constant _status-code<c>: zonk(c, int) {
 }
 
 constant response-parser<c>: zonk(c, response) {
-  function (k) {
+  (k) => {
     try protocol-version = _symbol(k);
     let _ = protocol-version;
     try _ = _skip-space(k);
@@ -34,7 +34,7 @@ constant response-parser<c>: zonk(c, response) {
     try _ = _http-line-break(k);
     try body = _read-all(k);
     Right(
-      Response{
+      Response {
         status-code,
         fields,
         body,

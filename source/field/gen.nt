@@ -8,27 +8,27 @@ import {
 
 constant _kvs: gen(pair(text, text)) {
   let rune-blacklist = List[` `, `\u{8}`, `\u{9}`, `\u{a}`, `\u{b}`, `\u{c}`, `\u{d}`, `:`];
-  let c = _Config{blacklist := rune-blacklist, min-length := 1};
+  let c = _Config {blacklist := rune-blacklist, min-length := 1};
   let !text-gen = _adjusted-text-gen(c);
   pair-gen(text-gen, text-gen)
 }
 
 constant field-gen: gen(field) {
-  let Gen{generate, shrink} = _kvs;
-  Gen{
+  let Gen {generate, shrink} = _kvs;
+  Gen {
     generate := {
-      function (size) {
+      (size) => {
         let Pair(key, value) = generate(size);
-        Field{key, value}
+        Field {key, value}
       }
     },
     shrink := {
-      function (f: field) {
-        let Field{key, value} = f;
+      (f: field) => {
+        let Field {key, value} = f;
         let cands = shrink(Pair(key, value));
-        for-each(cands, function (p) {
+        for-each(cands, (p) => {
           let Pair(key, value) = p;
-          Field{key, value}
+          Field {key, value}
         })
       }
     },

@@ -7,7 +7,7 @@ import {
 }
 
 constant request-parser<c>: zonk(c, request) {
-  function (k) {
+  (k) => {
     try method = request-method-parser(k);
     try _ = _skip-space(k);
     try path = _symbol(k);
@@ -19,7 +19,7 @@ constant request-parser<c>: zonk(c, request) {
     try _ = _http-line-break(k);
     try body = _read-all(k);
     Right(
-      Request{
+      Request {
         method,
         path,
         fields,

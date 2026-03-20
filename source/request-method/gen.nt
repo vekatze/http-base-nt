@@ -15,9 +15,9 @@ import {
 }
 
 constant request-method-gen: gen(request-method) {
-  Gen{
+  Gen {
     generate := {
-      function (_) {
+      (_) => {
         let dice = random-in-range-int(0, 7);
         match dice {
         | 0 =>
@@ -40,7 +40,7 @@ constant request-method-gen: gen(request-method) {
       }
     },
     shrink := {
-      function (m) {
+      (m) => {
         match m {
         | GET =>
           List[]

@@ -15,7 +15,7 @@ import {
 }
 
 constant request-method-parser<c>: zonk(c, request-method) {
-  function (k) {
+  (k) => {
     try method-text = _symbol(k);
     let method-or-none on method-text =
       if eq-text(method-text, "GET") {
