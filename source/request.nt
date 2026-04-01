@@ -6,8 +6,8 @@ import {
 data request {
 | Request(
     method: request-method,
-    path: text,
+    path: string,
     fields: header,
-    body: text,
+    body: string,
   )
 }

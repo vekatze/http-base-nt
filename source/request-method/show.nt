@@ -13,7 +13,7 @@ import {
   },
 }
 
-define show-request-method(rm: request-method) -> text {
+define show-request-method(rm: request-method) -> string {
   match rm {
   | GET =>
     *"GET"

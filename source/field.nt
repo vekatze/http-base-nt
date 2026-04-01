@@ -1,6 +1,6 @@
 data field {
 | Field(
-    key: text,
-    value: text,
+    key: string,
+    value: string,
   )
 }

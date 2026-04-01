@@ -21,11 +21,11 @@ constant _skip-space<c>: zonk(c, unit) {
   drop-while(_is-space)
 }
 
-constant _symbol<c>: zonk(c, text) {
+constant _symbol<c>: zonk(c, string) {
   take-while(compose(not, _is-space))
 }
 
-constant _until-newline<c>: zonk(c, text) {
+constant _until-newline<c>: zonk(c, string) {
   take-while((r) => {
     ne-rune(r, `\r`)
   })
@@ -35,7 +35,7 @@ constant _http-line-break<c>: zonk(c, unit) {
   chunk("\r\n")
 }
 
-constant _read-all<c>: zonk(c, text) {
+constant _read-all<c>: zonk(c, string) {
   take-while((_) => {
     True
   })

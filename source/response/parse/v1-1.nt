@@ -8,9 +8,9 @@ import {
 
 constant _status-code<c>: zonk(c, int) {
   (k) => {
-    try status-code-text = take-while(_is-status-code-number)(k);
-    let status-code-or-none on status-code-text = parse-int(status-code-text);
-    let _ = status-code-text;
+    try status-code-string = take-while(_is-status-code-number)(k);
+    let status-code-or-none on status-code-string = parse-int(status-code-string);
+    let _ = status-code-string;
     match status-code-or-none {
     | Right(v) =>
       Right(v)

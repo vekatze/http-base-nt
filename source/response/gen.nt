@@ -5,30 +5,30 @@ import {
   noa.gen.pair {pair-gen},
   this.header {header},
   this.header.gen {header-gen},
-  this.private.gen {_Config, _adjusted-text-gen},
+  this.private.gen {_Config, _adjusted-string-gen},
   this.response {Response, response},
 }
 
-constant _field-body-pair: gen(pair(header, text)) {
+constant _field-body-pair: gen(pair(header, string)) {
   let rune-blacklist = List[` `, `\u{8}`, `\u{9}`, `\u{a}`, `\u{b}`, `\u{c}`, `\u{d}`];
   let c = _Config {blacklist := rune-blacklist, min-length := 1};
-  let text-gen = _adjusted-text-gen(c);
-  pair-gen(header-gen, text-gen)
+  let string-gen = _adjusted-string-gen(c);
+  pair-gen(header-gen, string-gen)
 }
 
 constant response-gen: gen(response) {
   let rune-blacklist = List[` `, `\u{8}`, `\u{9}`, `\u{a}`, `\u{b}`, `\u{c}`, `\u{d}`];
   let c = _Config {blacklist := rune-blacklist, min-length := 1};
-  let !text-gen = _adjusted-text-gen(c);
+  let !string-gen = _adjusted-string-gen(c);
   let Gen {generate := generate-header} = header-gen;
-  let Gen {generate := generate-text} = text-gen;
+  let Gen {generate := generate-string} = string-gen;
   let Gen {shrink := shrink-pair} = _field-body-pair;
   Gen {
     generate := {
       (size) => {
         let status-code = random-in-range-int(100, 999);
         let fields = generate-header(size);
-        let body = generate-text(size);
+        let body = generate-string(size);
         Response {status-code, fields, body}
       }
     },

@@ -1,6 +1,6 @@
 import {
   core.list {length},
-  core.text {split},
+  core.string {split},
   noa.check {check},
   noa.make-noa-kit {make-default-noa-kit},
   this.request {request},
@@ -21,12 +21,12 @@ define main() -> unit {
     "∀ (r: request). show(parse(show(r))) == show(r)",
     request-gen,
     (!r: request) => {
-      pin req-text-1 = show-request(r);
-      pin k = make-zonk-kit(*req-text-1, Unit);
+      pin req-string-1 = show-request(r);
+      pin k = make-zonk-kit(*req-string-1, Unit);
       match request-parser(k) {
       | Right(req) =>
-        pin req-text-2 = show-request(req);
-        eq-text(req-text-1, req-text-2)
+        pin req-string-2 = show-request(req);
+        eq-string(req-string-1, req-string-2)
       | Left(_) =>
         False
       }
@@ -37,8 +37,8 @@ define main() -> unit {
     "∀ (r: request). `show(r)` contains at least one empty line",
     request-gen,
     (!r: request) => {
-      pin req-text = show-request(r);
-      pin segments = split(req-text, "\r\n\r\n");
+      pin req-string = show-request(r);
+      pin segments = split(req-string, "\r\n\r\n");
       ge-int(length(segments), 2)
     },
   );
@@ -47,12 +47,12 @@ define main() -> unit {
     "∀ (r: response). show(parse(show(r))) == show(r)",
     response-gen,
     (!r: response) => {
-      pin req-text-1 = show-response(r);
-      pin k = make-zonk-kit(*req-text-1, Unit);
+      pin req-string-1 = show-response(r);
+      pin k = make-zonk-kit(*req-string-1, Unit);
       match response-parser(k) {
       | Right(req) =>
-        pin req-text-2 = show-response(req);
-        eq-text(req-text-1, req-text-2)
+        pin req-string-2 = show-response(req);
+        eq-string(req-string-1, req-string-2)
       | Left(_) =>
         False
       }
@@ -63,8 +63,8 @@ define main() -> unit {
     "∀ (r: response). `show(r)` contains at least one empty line",
     response-gen,
     (!r: response) => {
-      pin req-text = show-response(r);
-      pin segments = split(req-text, "\r\n\r\n");
+      pin req-string = show-response(r);
+      pin segments = split(req-string, "\r\n\r\n");
       ge-int(length(segments), 2)
     },
   )

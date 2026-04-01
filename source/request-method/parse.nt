@@ -16,28 +16,28 @@ import {
 
 constant request-method-parser<c>: zonk(c, request-method) {
   (k) => {
-    try method-text = _symbol(k);
-    let method-or-none on method-text =
-      if eq-text(method-text, "GET") {
+    try method-string = _symbol(k);
+    let method-or-none on method-string =
+      if eq-string(method-string, "GET") {
         Right(GET)
-      } else-if eq-text(method-text, "HEAD") {
+      } else-if eq-string(method-string, "HEAD") {
         Right(HEAD)
-      } else-if eq-text(method-text, "POST") {
+      } else-if eq-string(method-string, "POST") {
         Right(POST)
-      } else-if eq-text(method-text, "PUT") {
+      } else-if eq-string(method-string, "PUT") {
         Right(PUT)
-      } else-if eq-text(method-text, "DELETE") {
+      } else-if eq-string(method-string, "DELETE") {
         Right(DELETE)
-      } else-if eq-text(method-text, "OPTIONS") {
+      } else-if eq-string(method-string, "OPTIONS") {
         Right(OPTIONS)
-      } else-if eq-text(method-text, "TRACE") {
+      } else-if eq-string(method-string, "TRACE") {
         Right(TRACE)
-      } else-if eq-text(method-text, "PATCH") {
+      } else-if eq-string(method-string, "PATCH") {
         Right(PATCH)
       } else {
         Left(Unit)
       };
-    let _ = method-text;
+    let _ = method-string;
     match method-or-none {
     | Right(method) =>
       Right(method)

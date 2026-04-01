@@ -1,10 +1,10 @@
 import {
   core.show {Show, show},
-  core.text {join},
+  core.string {join},
   this.field {Field, field},
 }
 
-define show-field(h: field) -> text {
+define show-field(h: field) -> string {
   let Field {key, value} = h;
   join(List[key, *": ", value])
 }

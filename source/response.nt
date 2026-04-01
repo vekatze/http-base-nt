@@ -1,6 +1,6 @@
 import {
   core.int.show {show-int},
-  core.text {text-byte-length},
+  core.string {string-byte-length},
   this.field {Field},
   this.header {header},
 }
@@ -9,12 +9,12 @@ data response {
 | Response(
     status-code: int,
     fields: header,
-    body: text,
+    body: string,
   )
 }
 
-define text-response(status-code: int, body: text) -> response {
-  let len on body = text-byte-length(body);
+define string-response(status-code: int, body: string) -> response {
+  let len on body = string-byte-length(body);
   Response {
     status-code,
     fields := List[Field(*"content-length", show-int(len))],

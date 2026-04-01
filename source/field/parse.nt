@@ -7,7 +7,7 @@ import {
   zonk.zonk-kit {zonk-kit},
 }
 
-define _field-value-parser<c>(k: &zonk-kit(c), acc: list(text)) -> parsed(text) {
+define _field-value-parser<c>(k: &zonk-kit(c), acc: list(string)) -> parsed(string) {
   try new-fragment = _until-newline(k);
   try _ = chunk("\r")(k);
   try none-or-newline = optional(chunk("\n"))(k);
@@ -15,7 +15,7 @@ define _field-value-parser<c>(k: &zonk-kit(c), acc: list(text)) -> parsed(text) 
   | Left(_) =>
     _field-value-parser(k, append(acc, List[new-fragment, *"\r"]))
   | Right(_) =>
-    Right(core.text.join(append(acc, List[new-fragment])))
+    Right(core.string.join(append(acc, List[new-fragment])))
   }
 }
 

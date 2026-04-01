@@ -4,34 +4,34 @@ import {
   noa.gen.pair {pair-gen},
   this.header {header},
   this.header.gen {header-gen},
-  this.private.gen {_Config, _adjusted-text-gen},
+  this.private.gen {_Config, _adjusted-string-gen},
   this.request {Request, request},
   this.request-method {request-method},
   this.request-method.gen {request-method-gen},
 }
 
-constant _tuple-requests: gen(pair(request-method, pair(text, pair(header, text)))) {
+constant _tuple-requests: gen(pair(request-method, pair(string, pair(header, string)))) {
   let rune-blacklist = List[` `, `\u{8}`, `\u{9}`, `\u{a}`, `\u{b}`, `\u{c}`, `\u{d}`];
   let c = _Config {blacklist := rune-blacklist, min-length := 1};
-  let !text-gen = _adjusted-text-gen(c);
-  pair-gen(request-method-gen, pair-gen(text-gen, pair-gen(header-gen, text-gen)))
+  let !string-gen = _adjusted-string-gen(c);
+  pair-gen(request-method-gen, pair-gen(string-gen, pair-gen(header-gen, string-gen)))
 }
 
 constant request-gen: gen(request) {
   let rune-blacklist = List[` `, `\u{8}`, `\u{9}`, `\u{a}`, `\u{b}`, `\u{c}`, `\u{d}`];
   let c = _Config {blacklist := rune-blacklist, min-length := 1};
-  let !text-gen = _adjusted-text-gen(c);
+  let !string-gen = _adjusted-string-gen(c);
   let Gen {generate} = request-method-gen;
-  let Gen {generate := !generate-text} = text-gen;
+  let Gen {generate := !generate-string} = string-gen;
   let Gen {generate := !generate-header} = header-gen;
   let Gen {shrink := !shrink-tuple} = _tuple-requests;
   Gen {
     generate := {
       (size) => {
         let method = generate(size);
-        let path = generate-text(size);
+        let path = generate-string(size);
         let fields = generate-header(size);
-        let body = generate-text(size);
+        let body = generate-string(size);
         Request {method, path, fields, body}
       }
     },

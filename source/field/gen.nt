@@ -3,14 +3,14 @@ import {
   noa.gen {Gen, gen},
   noa.gen.pair {pair-gen},
   this.field {Field, field},
-  this.private.gen {_Config, _adjusted-text-gen},
+  this.private.gen {_Config, _adjusted-string-gen},
 }
 
-constant _kvs: gen(pair(text, text)) {
+constant _kvs: gen(pair(string, string)) {
   let rune-blacklist = List[` `, `\u{8}`, `\u{9}`, `\u{a}`, `\u{b}`, `\u{c}`, `\u{d}`, `:`];
   let c = _Config {blacklist := rune-blacklist, min-length := 1};
-  let !text-gen = _adjusted-text-gen(c);
-  pair-gen(text-gen, text-gen)
+  let !string-gen = _adjusted-string-gen(c);
+  pair-gen(string-gen, string-gen)
 }
 
 constant field-gen: gen(field) {

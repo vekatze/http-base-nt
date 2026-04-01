@@ -1,12 +1,12 @@
 import {
   core.list {for-each, length},
   core.show {Show, show},
-  core.text {intercalate, join},
+  core.string {intercalate, join},
   this.field.show {show-field},
   this.header {header},
 }
 
-define show-header(fields: header) -> text {
+define show-header(fields: header) -> string {
   let len on fields = length(fields);
   if eq-int(len, 0) {
     *""
