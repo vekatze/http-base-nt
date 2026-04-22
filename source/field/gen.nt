@@ -7,7 +7,7 @@ import {
 }
 
 constant _kvs: gen(pair(string, string)) {
-  let rune-blacklist = List[` `, `\u{8}`, `\u{9}`, `\u{a}`, `\u{b}`, `\u{c}`, `\u{d}`, `:`];
+  let rune-blacklist = List[` `, `\u{8}`, `\u{9}`, `\u{A}`, `\u{B}`, `\u{C}`, `\u{D}`, `:`];
   let c = _Config{blacklist := rune-blacklist, min-length := 1};
   let !string-gen = _adjusted-string-gen(c);
   pair-gen(string-gen, string-gen)

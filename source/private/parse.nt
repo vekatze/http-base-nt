@@ -6,7 +6,7 @@ import {
 define _is-space(r: rune) -> bool {
   if eq-rune(r, ` `) {
     True
-  } else-if and(le-rune(`\u{9}`, r), le-rune(r, `\u{d}`)) {
+  } else-if and(le-rune(`\u{9}`, r), le-rune(r, `\u{D}`)) {
     True
   } else {
     False
