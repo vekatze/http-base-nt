@@ -5,7 +5,7 @@
 ## Installation
 
 ```sh
-neut get http-base https://github.com/vekatze/http-base-nt/raw/main/archive/0-1-40.tar.zst
+neut get http-base https://github.com/vekatze/http-base-nt/raw/main/archive/0-1-50.tar.zst
 ```
 
 ## Types
@@ -17,9 +17,9 @@ neut get http-base https://github.com/vekatze/http-base-nt/raw/main/archive/0-1-
 data request {
 | Request(
     method: request-method,
-    path: text,
+    path: string,
     fields: header,
-    body: text,
+    body: string,
   )
 }
 
@@ -28,7 +28,7 @@ data response {
 | Response(
     status-code: int,
     fields: header,
-    body: text,
+    body: string,
   )
 }
 
@@ -45,15 +45,15 @@ data request-method {
 }
 
 // Represents an HTTP header.
-inline header: type {
+alias header {
   list(field)
 }
 
 // Represents an HTTP header key-value pair.
 data field {
 | Field(
-    key: text,
-    value: text,
+    key: string,
+    value: string,
   )
 }
 ```
@@ -62,19 +62,17 @@ data field {
 
 ```neut
 // A parser for an HTTP/1.1 request.
-// You can run this parser using `zonk.parser.run`.
-define request-parser: parser(request)
+constant request-parser<c>: zonk(c, request)
 
 // A parser for an HTTP/1.1 response.
-// You can run this parser using `zonk.parser.run`
-define response-parser: parser(response)
+constant response-parser<c>: zonk(c, response)
 
 // Formats a request as an HTTP/1.1 request.
-define show-request(r: request): text
+define show-request(r: request) -> string
 
 // Formats a response as an HTTP/1.1 response.
-define show-response(r: response): text
+define show-response(resp: response) -> string
 
 // Constructs a response from a status code and a body.
-define text-response(status-code: int, body: text)
+define string-response(status-code: int, body: string) -> response
 ```
