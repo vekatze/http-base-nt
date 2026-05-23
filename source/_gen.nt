@@ -1,19 +1,19 @@
 import {
   core.list.eq {member},
   noa.gen {gen},
-  noa.gen.custom.string {Config, string-gen},
+  noa.gen.custom.string {string-gen},
 }
 
-data _config {
-| _Config(
+data config {
+| Config(
     blacklist: list(rune),
     min-length: int,
   )
 }
 
-inline _adjusted-string-gen(!c: _config) -> gen(string) {
-  let _Config{min-length, blacklist} = c;
-  string-gen(Config{
+inline adjusted-string-gen(!c: config) -> gen(string) {
+  let Config{min-length, blacklist} = c;
+  string-gen(noa.gen.custom.string.Config{
     min-length,
     max-length := none,
     rune-generator := none,

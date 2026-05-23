@@ -1,5 +1,5 @@
 import {
-  this.private.parse {_symbol},
+  this._parse {symbol},
   this.request-method {
     DELETE,
     GET,
@@ -16,7 +16,7 @@ import {
 
 constant request-method-parser<c>: zonk(c, request-method) {
   (k) => {
-    try method-string = _symbol(k);
+    try method-string = symbol(k);
     let method-or-none on method-string =
       if eq-string(method-string, "GET") {
         Right(GET)

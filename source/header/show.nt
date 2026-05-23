@@ -1,6 +1,5 @@
 import {
   core.list {for-each, length},
-  core.show {Show, show},
   core.string {intercalate, join},
   this.field.show {show-field},
   this.header {header},
@@ -18,5 +17,11 @@ define show-header(fields: header) -> string {
 }
 
 constant as-show: show(header) {
-  Show{show := show-header}
+  Show{
+    render := {
+      (h) => {
+        show-header(*h)
+      }
+    },
+  }
 }

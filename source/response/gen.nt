@@ -3,23 +3,23 @@ import {
   core.random {random-in-range-int},
   noa.gen {Gen, gen},
   noa.gen.pair {pair-gen},
+  this._gen {Config, adjusted-string-gen},
   this.header {header},
   this.header.gen {header-gen},
-  this.private.gen {_Config, _adjusted-string-gen},
   this.response {Response, response},
 }
 
 constant _field-body-pair: gen(pair(header, string)) {
   let rune-blacklist = List[` `, `\u{8}`, `\u{9}`, `\u{A}`, `\u{B}`, `\u{C}`, `\u{D}`];
-  let c = _Config{blacklist := rune-blacklist, min-length := 1};
-  let string-gen = _adjusted-string-gen(c);
+  let c = Config{blacklist := rune-blacklist, min-length := 1};
+  let string-gen = adjusted-string-gen(c);
   pair-gen(header-gen, string-gen)
 }
 
 constant response-gen: gen(response) {
   let rune-blacklist = List[` `, `\u{8}`, `\u{9}`, `\u{A}`, `\u{B}`, `\u{C}`, `\u{D}`];
-  let c = _Config{blacklist := rune-blacklist, min-length := 1};
-  let !string-gen = _adjusted-string-gen(c);
+  let c = Config{blacklist := rune-blacklist, min-length := 1};
+  let !string-gen = adjusted-string-gen(c);
   let Gen{generate := generate-header} = header-gen;
   let Gen{generate := generate-string} = string-gen;
   let Gen{shrink := shrink-pair} = _field-body-pair;

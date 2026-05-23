@@ -1,5 +1,4 @@
 import {
-  core.show {Show, show},
   core.string {join},
   this.field {Field, field},
 }
@@ -10,5 +9,11 @@ define show-field(h: field) -> string {
 }
 
 constant as-show: show(field) {
-  Show{show := show-field}
+  Show{
+    render := {
+      (f) => {
+        show-field(*f)
+      }
+    },
+  }
 }

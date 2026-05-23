@@ -1,5 +1,4 @@
 import {
-  core.show {Show, show},
   core.string {join},
   this.header.show {show-header},
   this.request {Request, request},
@@ -22,5 +21,11 @@ define show-request(r: request) -> string {
 }
 
 constant as-show: show(request) {
-  Show{show := show-request}
+  Show{
+    render := {
+      (req) => {
+        show-request(*req)
+      }
+    },
+  }
 }

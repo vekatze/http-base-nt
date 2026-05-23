@@ -2,14 +2,14 @@ import {
   core.list {for-each},
   noa.gen {Gen, gen},
   noa.gen.pair {pair-gen},
+  this._gen {Config, adjusted-string-gen},
   this.field {Field, field},
-  this.private.gen {_Config, _adjusted-string-gen},
 }
 
 constant _kvs: gen(pair(string, string)) {
   let rune-blacklist = List[` `, `\u{8}`, `\u{9}`, `\u{A}`, `\u{B}`, `\u{C}`, `\u{D}`, `:`];
-  let c = _Config{blacklist := rune-blacklist, min-length := 1};
-  let !string-gen = _adjusted-string-gen(c);
+  let c = Config{blacklist := rune-blacklist, min-length := 1};
+  let !string-gen = adjusted-string-gen(c);
   pair-gen(string-gen, string-gen)
 }
 

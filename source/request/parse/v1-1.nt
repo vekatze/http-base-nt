@@ -1,6 +1,6 @@
 import {
+  this._parse {http-line-break, read-all, skip-space, symbol},
   this.header.parse {header-parser},
-  this.private.parse {_http-line-break, _read-all, _skip-space, _symbol},
   this.request {Request, request},
   this.request-method.parse {request-method-parser},
   zonk.parse {zonk},
@@ -9,15 +9,15 @@ import {
 constant request-parser<c>: zonk(c, request) {
   (k) => {
     try method = request-method-parser(k);
-    try _ = _skip-space(k);
-    try path = _symbol(k);
-    try _ = _skip-space(k);
-    try protocol-version = _symbol(k);
+    try _ = skip-space(k);
+    try path = symbol(k);
+    try _ = skip-space(k);
+    try protocol-version = symbol(k);
     let _ = protocol-version;
-    try _ = _http-line-break(k);
+    try _ = http-line-break(k);
     try fields = header-parser()(k);
-    try _ = _http-line-break(k);
-    try body = _read-all(k);
+    try _ = http-line-break(k);
+    try body = read-all(k);
     Right(
       Request{
         method,

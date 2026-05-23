@@ -1,14 +1,14 @@
 import {
   core.int.parse {parse-int},
+  this._parse {http-line-break, is-status-code-number, read-all, skip-space, symbol, until-newline},
   this.header.parse {header-parser},
-  this.private.parse {_http-line-break, _is-status-code-number, _read-all, _skip-space, _symbol, _until-newline},
   this.response {Response, response},
   zonk.parse {report-unexpected-input, take-while, zonk},
 }
 
 constant _status-code<c>: zonk(c, int) {
   (k) => {
-    try status-code-string = take-while(_is-status-code-number)(k);
+    try status-code-string = take-while(is-status-code-number)(k);
     let status-code-or-none on status-code-string = parse-int(status-code-string);
     let _ = status-code-string;
     match status-code-or-none {
@@ -22,17 +22,17 @@ constant _status-code<c>: zonk(c, int) {
 
 constant response-parser<c>: zonk(c, response) {
   (k) => {
-    try protocol-version = _symbol(k);
+    try protocol-version = symbol(k);
     let _ = protocol-version;
-    try _ = _skip-space(k);
+    try _ = skip-space(k);
     try status-code = _status-code(k);
-    try _ = _skip-space(k);
-    try reason-phrase = _until-newline(k);
+    try _ = skip-space(k);
+    try reason-phrase = until-newline(k);
     let _ = reason-phrase;
-    try _ = _http-line-break(k);
+    try _ = http-line-break(k);
     try fields = header-parser()(k);
-    try _ = _http-line-break(k);
-    try body = _read-all(k);
+    try _ = http-line-break(k);
+    try body = read-all(k);
     Right(
       Response{
         status-code,

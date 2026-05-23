@@ -1,5 +1,4 @@
 import {
-  core.show {Show, show},
   this.request-method {
     DELETE,
     GET,
@@ -35,5 +34,11 @@ define show-request-method(rm: request-method) -> string {
 }
 
 constant as-show: show(request-method) {
-  Show{show := show-request-method}
+  Show{
+    render := {
+      (rm) => {
+        show-request-method(*rm)
+      }
+    },
+  }
 }
