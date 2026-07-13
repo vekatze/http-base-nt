@@ -1,12 +1,12 @@
 import {
-  core.function {compose},
-  zonk.parse {chunk, drop-while, take-while, zonk},
+  core::function {compose},
+  zonk::parse {chunk, drop-while, take-while, zonk},
 }
 
 define is-space(r: rune) -> bool {
   if eq-rune(r, ` `) {
     True
-  } else-if and(le-rune(`\u{9}`, r), le-rune(r, `\u{D}`)) {
+  } else-if and::(le-rune(`\u{9}`, r), le-rune(r, `\u{D}`)) {
     True
   } else {
     False
@@ -17,30 +17,30 @@ define is-colon(r: rune) -> bool {
   eq-rune(r, `:`)
 }
 
-constant skip-space<c>: zonk(c, unit) {
+constant skip-space: zonk(unit) {
   drop-while(is-space)
 }
 
-constant symbol<c>: zonk(c, string) {
+constant symbol: zonk(string) {
   take-while(compose(not, is-space))
 }
 
-constant until-newline<c>: zonk(c, string) {
+constant until-newline: zonk(string) {
   take-while((r) => {
     ne-rune(r, `\r`)
   })
 }
 
-constant http-line-break<c>: zonk(c, unit) {
+constant http-line-break: zonk(unit) {
   chunk("\r\n")
 }
 
-constant read-all<c>: zonk(c, string) {
+constant read-all: zonk(string) {
   take-while((_) => {
     True
   })
 }
 
 define is-status-code-number(r: rune) -> bool {
-  and(le-rune(`0`, r), le-rune(r, `9`))
+  and::(le-rune(`0`, r), le-rune(r, `9`))
 }

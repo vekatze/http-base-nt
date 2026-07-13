@@ -1,6 +1,7 @@
 import {
-  this._parse {symbol},
-  this.request-method {
+  zonk::parse {report-unexpected-input, zonk},
+  _parse {symbol},
+  request-method {
     DELETE,
     GET,
     HEAD,
@@ -11,11 +12,10 @@ import {
     TRACE,
     request-method,
   },
-  zonk.parse {report-unexpected-input, zonk},
 }
 
-constant request-method-parser<c>: zonk(c, request-method) {
-  (k) => {
+constant request-method-parser: zonk(request-method) {
+  (k) =>> {
     try method-string = symbol(k);
     let method-or-none on method-string =
       if eq-string(method-string, "GET") {
@@ -42,7 +42,7 @@ constant request-method-parser<c>: zonk(c, request-method) {
     | Right(method) =>
       Right(method)
     | Left(_) =>
-      report-unexpected-input("request method")
+      report-unexpected-input(k, "request method")
     }
   }
 }

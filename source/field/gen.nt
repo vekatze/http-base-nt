@@ -1,36 +1,23 @@
 import {
-  core.list {for-each},
-  noa.gen {Gen, gen},
-  noa.gen.pair {pair-gen},
-  this._gen {Config, adjusted-string-gen},
-  this.field {Field, field},
+  noa::gen {Gen, apply, gen, gen-bind, gen-map},
+  noa::suite {gen-kit},
+  _gen {gen-non-empty-token},
+  field {Field, field},
 }
 
-constant _kvs: gen(pair(string, string)) {
-  let rune-blacklist = List[` `, `\u{8}`, `\u{9}`, `\u{A}`, `\u{B}`, `\u{C}`, `\u{D}`, `:`];
-  let c = Config{blacklist := rune-blacklist, min-length := 1};
-  let !string-gen = adjusted-string-gen(c);
-  pair-gen(string-gen, string-gen)
-}
-
-constant field-gen: gen(field) {
-  let Gen{generate, shrink} = _kvs;
-  Gen{
-    generate := {
-      (size) => {
-        let Pair(key, value) = generate(size);
-        Field{key, value}
-      }
-    },
-    shrink := {
-      (f: field) => {
-        let Field{key, value} = f;
-        let cands = shrink(Pair(key, value));
-        for-each(cands, (p) => {
-          let Pair(key, value) = p;
-          Field{key, value}
-        })
-      }
-    },
+define _gen-field() -> gen(field) {
+  with gen-bind {
+    bind key = gen-non-empty-token();
+    gen-map(gen-non-empty-token(), (value) => {
+      Field{key, value}
+    })
   }
+}
+
+constant gen-field: gen(field) {
+  Gen(
+    <r>(k: &gen-kit) =>> {
+      apply<r, field>(_gen-field(), k)
+    },
+  )
 }

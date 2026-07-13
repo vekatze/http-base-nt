@@ -1,13 +1,13 @@
 import {
-  core.int.parse {parse-int},
-  this._parse {http-line-break, is-status-code-number, read-all, skip-space, symbol, until-newline},
-  this.header.parse {header-parser},
-  this.response {Response, response},
-  zonk.parse {report-unexpected-input, take-while, zonk},
+  core::int.parse {parse-int},
+  zonk::parse {report-unexpected-input, take-while, zonk},
+  _parse {http-line-break, is-status-code-number, read-all, skip-space, symbol, until-newline},
+  header.parse {header-parser},
+  response {Response, response},
 }
 
-constant _status-code<c>: zonk(c, int) {
-  (k) => {
+constant _status-code: zonk(int) {
+  (k) =>> {
     try status-code-string = take-while(is-status-code-number)(k);
     let status-code-or-none on status-code-string = parse-int(status-code-string);
     let _ = status-code-string;
@@ -15,13 +15,13 @@ constant _status-code<c>: zonk(c, int) {
     | Right(v) =>
       Right(v)
     | Left(_) =>
-      report-unexpected-input("status code")
+      report-unexpected-input(k, "status code")
     }
   }
 }
 
-constant response-parser<c>: zonk(c, response) {
-  (k) => {
+constant response-parser: zonk(response) {
+  (k) =>> {
     try protocol-version = symbol(k);
     let _ = protocol-version;
     try _ = skip-space(k);

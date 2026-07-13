@@ -1,73 +1,71 @@
 import {
-  core.list {length},
-  core.string {split},
-  noa.check {check},
-  noa.noa-kit {make-default-noa-kit},
-  this.request {request},
-  this.request.gen {request-gen},
-  this.request.parse.v1-1 {request-parser},
-  this.request.show.v1-1 {show-request},
-  this.response {response},
-  this.response.gen {response-gen},
-  this.response.parse.v1-1 {response-parser},
-  this.response.show.v1-1 {show-response},
-  zonk.parse {make-zonk-kit},
+  core::list {length},
+  core::string {split},
+  noa::suite {make-default-noa-kit},
+  noa::suite.spec {check, property},
+  zonk::parse {make-zonk-kit},
+  request {request},
+  request.gen {gen-request},
+  request.parse.v1-1 {request-parser},
+  request.show.v1-1 {show-request},
+  response {response},
+  response.gen {gen-response},
+  response.parse.v1-1 {response-parser},
+  response.show.v1-1 {show-response},
 }
 
 define main() -> unit {
   pin k = make-default-noa-kit();
-  check::(
-    k,
-    "∀ (r: request). show(parse(show(r))) == show(r)",
-    request-gen,
-    (!r: request) => {
-      pin req-string-1 = show-request(r);
-      pin k = make-zonk-kit(*req-string-1, Unit);
-      match request-parser(k) {
-      | Right(req) =>
-        pin req-string-2 = show-request(req);
-        eq-string(req-string-1, req-string-2)
-      | Left(_) =>
-        False
-      }
-    },
-  );
-  check::(
-    k,
-    "∀ (r: request). `show(r)` contains at least one empty line",
-    request-gen,
-    (!r: request) => {
-      pin req-string = show-request(r);
-      pin segments = split(req-string, "\r\n\r\n");
-      ge-int(length(segments), 2)
-    },
-  );
-  check::(
-    k,
-    "∀ (r: response). show(parse(show(r))) == show(r)",
-    response-gen,
-    (!r: response) => {
-      pin req-string-1 = show-response(r);
-      pin k = make-zonk-kit(*req-string-1, Unit);
-      match response-parser(k) {
-      | Right(req) =>
-        pin req-string-2 = show-response(req);
-        eq-string(req-string-1, req-string-2)
-      | Left(_) =>
-        False
-      }
-    },
-  );
-  check::(
-    k,
-    "∀ (r: response). `show(r)` contains at least one empty line",
-    response-gen,
-    (!r: response) => {
-      pin req-string = show-response(r);
-      pin segments = split(req-string, "\r\n\r\n");
-      ge-int(length(segments), 2)
-    },
-  )
+  check(k, List::[
+    property::(
+      "∀ (r: request). show(parse(show(r))) == show(r)",
+      gen-request,
+      (r: &request) => {
+        pin req-string-1 = show-request(*r);
+        pin k = make-zonk-kit(*req-string-1);
+        match request-parser(k) {
+        | Right(req) =>
+          pin req-string-2 = show-request(req);
+          eq-string(req-string-1, req-string-2)
+        | Left(_) =>
+          False
+        }
+      },
+    ),
+    property::(
+      "∀ (r: request). `show(r)` contains at least one empty line",
+      gen-request,
+      (r: &request) => {
+        pin req-string = show-request(*r);
+        pin segments = split(req-string, "\r\n\r\n");
+        ge-int(length(segments), 2)
+      },
+    ),
+    property::(
+      "∀ (r: response). show(parse(show(r))) == show(r)",
+      gen-response,
+      (r: &response) => {
+        pin req-string-1 = show-response(*r);
+        pin k = make-zonk-kit(*req-string-1);
+        match response-parser(k) {
+        | Right(req) =>
+          pin req-string-2 = show-response(req);
+          eq-string(req-string-1, req-string-2)
+        | Left(_) =>
+          False
+        }
+      },
+    ),
+    property::(
+      "∀ (r: response). `show(r)` contains at least one empty line",
+      gen-response,
+      (r: &response) => {
+        pin req-string = show-response(*r);
+        pin segments = split(req-string, "\r\n\r\n");
+        ge-int(length(segments), 2)
+      },
+    ),
+  ])
 }
 
 define zen() -> unit {

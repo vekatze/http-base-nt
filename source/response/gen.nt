@@ -1,46 +1,26 @@
 import {
-  core.list {for-each},
-  core.random {random-in-range-int},
-  noa.gen {Gen, gen},
-  noa.gen.pair {pair-gen},
-  this._gen {Config, adjusted-string-gen},
-  this.header {header},
-  this.header.gen {header-gen},
-  this.response {Response, response},
+  noa::gen {Gen, apply, gen, gen-bind, gen-map},
+  noa::gen.int {gen-int},
+  noa::suite {gen-kit},
+  _gen {gen-non-empty-token},
+  header.gen {gen-header},
+  response {Response, response},
 }
 
-constant _field-body-pair: gen(pair(header, string)) {
-  let rune-blacklist = List[` `, `\u{8}`, `\u{9}`, `\u{A}`, `\u{B}`, `\u{C}`, `\u{D}`];
-  let c = Config{blacklist := rune-blacklist, min-length := 1};
-  let string-gen = adjusted-string-gen(c);
-  pair-gen(header-gen, string-gen)
-}
-
-constant response-gen: gen(response) {
-  let rune-blacklist = List[` `, `\u{8}`, `\u{9}`, `\u{A}`, `\u{B}`, `\u{C}`, `\u{D}`];
-  let c = Config{blacklist := rune-blacklist, min-length := 1};
-  let !string-gen = adjusted-string-gen(c);
-  let Gen{generate := generate-header} = header-gen;
-  let Gen{generate := generate-string} = string-gen;
-  let Gen{shrink := shrink-pair} = _field-body-pair;
-  Gen{
-    generate := {
-      (size) => {
-        let status-code = random-in-range-int(100, 999);
-        let fields = generate-header(size);
-        let body = generate-string(size);
-        Response{status-code, fields, body}
-      }
-    },
-    shrink := {
-      (req) => {
-        let Response{status-code, fields, body} = req;
-        let cands = shrink-pair(Pair(fields, body));
-        for-each(cands, (cand) => {
-          let Pair(fields, body) = cand;
-          Response{status-code, fields, body}
-        })
-      }
-    },
+define _gen-response() -> gen(response) {
+  with gen-bind {
+    bind status-code = gen-int(100, 999, 200);
+    bind fields = gen-header;
+    gen-map(gen-non-empty-token(), (body) => {
+      Response{status-code, fields, body}
+    })
   }
+}
+
+constant gen-response: gen(response) {
+  Gen(
+    <r>(k: &gen-kit) =>> {
+      apply<r, response>(_gen-response(), k)
+    },
+  )
 }

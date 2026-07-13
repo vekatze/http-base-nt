@@ -1,8 +1,8 @@
 import {
-  core.int.show {show-int},
-  core.string {join},
-  this.header.show {show-header},
-  this.response {Response, response},
+  core::int.show {show-int},
+  core::string {join},
+  header.show {show-header},
+  response {Response, response},
 }
 
 define _get-status-code-string(code: int) -> &string {
@@ -20,7 +20,7 @@ define _get-status-code-string(code: int) -> &string {
 
 define show-response(resp: response) -> string {
   let Response{status-code, fields, body} = resp;
-  join(List[
+  join(List::[
     *"HTTP/1.1",
     *" ",
     show-int(status-code),

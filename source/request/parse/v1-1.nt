@@ -1,13 +1,13 @@
 import {
-  this._parse {http-line-break, read-all, skip-space, symbol},
-  this.header.parse {header-parser},
-  this.request {Request, request},
-  this.request-method.parse {request-method-parser},
-  zonk.parse {zonk},
+  zonk::parse {zonk},
+  _parse {http-line-break, read-all, skip-space, symbol},
+  header.parse {header-parser},
+  request {Request, request},
+  request-method.parse {request-method-parser},
 }
 
-constant request-parser<c>: zonk(c, request) {
-  (k) => {
+constant request-parser: zonk(request) {
+  (k) =>> {
     try method = request-method-parser(k);
     try _ = skip-space(k);
     try path = symbol(k);

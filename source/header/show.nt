@@ -1,8 +1,8 @@
 import {
-  core.list {for-each, length},
-  core.string {intercalate, join},
-  this.field.show {show-field},
-  this.header {header},
+  core::list {for-each, length},
+  core::string {intercalate, join},
+  field.show {show-field},
+  header {header},
 }
 
 define show-header(fields: header) -> string {
@@ -12,7 +12,7 @@ define show-header(fields: header) -> string {
   } else {
     let ts = for-each(fields, show-field);
     let k = intercalate(ts, *"\r\n");
-    join(List[k, *"\r\n"])
+    join(List::[k, *"\r\n"])
   }
 }
 

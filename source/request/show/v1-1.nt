@@ -1,13 +1,13 @@
 import {
-  core.string {join},
-  this.header.show {show-header},
-  this.request {Request, request},
-  this.request-method.show {show-request-method},
+  core::string {join},
+  header.show {show-header},
+  request {Request, request},
+  request-method.show {show-request-method},
 }
 
 define show-request(r: request) -> string {
   let Request{method, path, fields, body} = r;
-  join(List[
+  join(List::[
     show-request-method(method),
     *" ",
     path,

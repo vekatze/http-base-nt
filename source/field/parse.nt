@@ -1,25 +1,25 @@
 import {
-  core.function {compose},
-  core.list {append},
-  this._parse {is-colon, skip-space, until-newline},
-  this.field {Field, field},
-  zonk.parse {chunk, not-followed-by, optional, parsed, take-while, zonk, zonk-kit},
+  core::function {compose},
+  core::list {append},
+  zonk::parse {chunk, not-followed-by, optional, parsed, take-while, zonk, zonk-kit},
+  _parse {is-colon, skip-space, until-newline},
+  field {Field, field},
 }
 
-define _field-value-parser<c>(k: &zonk-kit(c), acc: list(string)) -> parsed(string) {
+define _field-value-parser(k: &zonk-kit, acc: list(string)) ->> parsed(string) {
   try new-fragment = until-newline(k);
   try _ = chunk("\r")(k);
   try none-or-newline = optional(chunk("\n"))(k);
   match none-or-newline {
   | Left(_) =>
-    _field-value-parser(k, append(acc, List[new-fragment, *"\r"]))
+    _field-value-parser(k, append(acc, List::[new-fragment, *"\r"]))
   | Right(_) =>
-    Right(core.string.join(append(acc, List[new-fragment])))
+    Right(core::string.join(append(acc, List::[new-fragment])))
   }
 }
 
-constant field-parser<c>: zonk(c, field) {
-  (k) => {
+constant field-parser: zonk(field) {
+  (k) =>> {
     try _ = not-followed-by("newline", chunk("\r\n"))(k);
     try key = take-while(compose(not, is-colon))(k);
     try _ = chunk(":")(k);

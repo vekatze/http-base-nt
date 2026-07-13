@@ -1,9 +1,9 @@
 import {
-  this.field.parse {field-parser},
-  this.header {header},
-  zonk.parse {many, zonk},
+  zonk::parse {many, zonk},
+  field.parse {field-parser},
+  header {header},
 }
 
-define header-parser<c>() -> zonk(c, header) {
+define header-parser() -> zonk(header) {
   many(field-parser)
 }

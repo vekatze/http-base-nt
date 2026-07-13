@@ -1,29 +1,16 @@
 import {
-  core.list.eq {member},
-  noa.gen {gen},
-  noa.gen.custom.string {string-gen},
+  core::string {append},
+  noa::gen {gen, gen-map},
+  noa::gen.generic {Alphanumeric, derive},
 }
 
-data config {
-| Config(
-    blacklist: list(rune),
-    min-length: int,
-  )
+define gen-token() -> gen(string) {
+  derive::()[rune-category := Alphanumeric]
 }
 
-inline adjusted-string-gen(!c: config) -> gen(string) {
-  let Config{min-length, blacklist} = c;
-  string-gen(noa.gen.custom.string.Config{
-    min-length,
-    max-length := none,
-    rune-generator := none,
-    rune-acceptor := {
-      (r) => {
-        pin bk = blacklist;
-        pin r = r;
-        pin k = core.rune.eq.as-eq;
-        not(member(k, bk, r))
-      }
-    },
+define gen-non-empty-token() -> gen(string) {
+  gen-map(gen-token(), (t) => {
+    pin t = t;
+    append(t, "a")
   })
 }

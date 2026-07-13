@@ -1,5 +1,5 @@
 import {
-  this.field {field},
+  field {field},
 }
 
 alias header {

@@ -1,6 +1,6 @@
 import {
-  this.header {header},
-  this.request-method {request-method},
+  header {header},
+  request-method {request-method},
 }
 
 data request {

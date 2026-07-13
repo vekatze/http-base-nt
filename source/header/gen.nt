@@ -1,10 +1,15 @@
 import {
-  noa.gen {gen},
-  noa.gen.list {list-gen},
-  this.field.gen {field-gen},
-  this.header {header},
+  noa::gen {Gen, apply, gen},
+  noa::gen.list {gen-list},
+  noa::suite {gen-kit},
+  field.gen {gen-field},
+  header {header},
 }
 
-constant header-gen: gen(header) {
-  list-gen(field-gen)
+constant gen-header: gen(header) {
+  Gen(
+    <r>(k: &gen-kit) =>> {
+      apply<r, header>(gen-list(gen-field), k)
+    },
+  )
 }

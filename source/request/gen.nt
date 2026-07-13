@@ -1,50 +1,32 @@
 import {
-  core.list {for-each},
-  noa.gen {Gen, gen},
-  noa.gen.pair {pair-gen},
-  this._gen {Config, adjusted-string-gen},
-  this.header {header},
-  this.header.gen {header-gen},
-  this.request {Request, request},
-  this.request-method {request-method},
-  this.request-method.gen {request-method-gen},
+  noa::gen {Gen, apply, gen, gen-bind, gen-map},
+  noa::gen.generic {derive},
+  noa::suite {gen-kit},
+  _gen {gen-non-empty-token},
+  header.gen {gen-header},
+  request {Request, request},
+  request-method {request-method},
 }
 
-constant _tuple-requests: gen(pair(request-method, pair(string, pair(header, string)))) {
-  let rune-blacklist = List[` `, `\u{8}`, `\u{9}`, `\u{A}`, `\u{B}`, `\u{C}`, `\u{D}`];
-  let c = Config{blacklist := rune-blacklist, min-length := 1};
-  let !string-gen = adjusted-string-gen(c);
-  pair-gen(request-method-gen, pair-gen(string-gen, pair-gen(header-gen, string-gen)))
+define gen-request-method() -> gen(request-method) {
+  derive::()
 }
 
-constant request-gen: gen(request) {
-  let rune-blacklist = List[` `, `\u{8}`, `\u{9}`, `\u{A}`, `\u{B}`, `\u{C}`, `\u{D}`];
-  let c = Config{blacklist := rune-blacklist, min-length := 1};
-  let !string-gen = adjusted-string-gen(c);
-  let Gen{generate} = request-method-gen;
-  let Gen{generate := !generate-string} = string-gen;
-  let Gen{generate := !generate-header} = header-gen;
-  let Gen{shrink := !shrink-tuple} = _tuple-requests;
-  Gen{
-    generate := {
-      (size) => {
-        let method = generate(size);
-        let path = generate-string(size);
-        let fields = generate-header(size);
-        let body = generate-string(size);
-        Request{method, path, fields, body}
-      }
-    },
-    shrink := {
-      (req) => {
-        let Request{method, path, fields, body} = req;
-        let tup = Pair(method, Pair(path, Pair(fields, body)));
-        let cands = shrink-tuple(tup);
-        for-each(cands, (cand) => {
-          let Pair(method, Pair(path, Pair(fields, body))) = cand;
-          Request{method, path, fields, body}
-        })
-      }
-    },
+define _gen-request() -> gen(request) {
+  with gen-bind {
+    bind method = gen-request-method();
+    bind path = gen-non-empty-token();
+    bind fields = gen-header;
+    gen-map(gen-non-empty-token(), (body) => {
+      Request{method, path, fields, body}
+    })
   }
+}
+
+constant gen-request: gen(request) {
+  Gen(
+    <r>(k: &gen-kit) =>> {
+      apply<r, request>(_gen-request(), k)
+    },
+  )
 }
