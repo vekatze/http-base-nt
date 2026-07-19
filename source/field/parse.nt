@@ -2,8 +2,8 @@ import {
   core::function {compose},
   core::list {append},
   zonk::parse {chunk, not-followed-by, optional, parsed, take-while, zonk, zonk-kit},
-  _parse {is-colon, skip-space, until-newline},
-  field {Field, field},
+  this::_parse {is-colon, skip-space, until-newline},
+  this::field {Field, field},
 }
 
 define _field-value-parser(k: &zonk-kit, acc: list(string)) ->> parsed(string) {
@@ -14,7 +14,7 @@ define _field-value-parser(k: &zonk-kit, acc: list(string)) ->> parsed(string) {
   | Left(_) =>
     _field-value-parser(k, append(acc, List::[new-fragment, *"\r"]))
   | Right(_) =>
-    Right(core::string.join(append(acc, List::[new-fragment])))
+    Right(core::string::join(append(acc, List::[new-fragment])))
   }
 }
 

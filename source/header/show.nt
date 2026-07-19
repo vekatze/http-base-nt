@@ -1,8 +1,8 @@
 import {
   core::list {for-each, length},
   core::string {intercalate, join},
-  field.show {show-field},
-  header {header},
+  this::field.show {show-field},
+  this::header {header},
 }
 
 define show-header(fields: header) -> string {

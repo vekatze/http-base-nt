@@ -1,8 +1,8 @@
 import {
   noa::gen {Gen, apply, gen, gen-bind, gen-map},
   noa::suite {gen-kit},
-  _gen {gen-non-empty-token},
-  field {Field, field},
+  this::_gen {gen-non-empty-token},
+  this::field {Field, field},
 }
 
 define _gen-field() -> gen(field) {

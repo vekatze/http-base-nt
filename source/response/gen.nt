@@ -2,9 +2,9 @@ import {
   noa::gen {Gen, apply, gen, gen-bind, gen-map},
   noa::gen.int {gen-int},
   noa::suite {gen-kit},
-  _gen {gen-non-empty-token},
-  header.gen {gen-header},
-  response {Response, response},
+  this::_gen {gen-non-empty-token},
+  this::header.gen {gen-header},
+  this::response {Response, response},
 }
 
 define _gen-response() -> gen(response) {

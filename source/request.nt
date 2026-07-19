@@ -1,6 +1,6 @@
 import {
-  header {header},
-  request-method {request-method},
+  this::header {header},
+  this::request-method {request-method},
 }
 
 data request {

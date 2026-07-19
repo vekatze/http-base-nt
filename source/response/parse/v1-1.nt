@@ -1,9 +1,9 @@
 import {
   core::int.parse {parse-int},
   zonk::parse {report-unexpected-input, take-while, zonk},
-  _parse {http-line-break, is-status-code-number, read-all, skip-space, symbol, until-newline},
-  header.parse {header-parser},
-  response {Response, response},
+  this::_parse {http-line-break, is-status-code-number, read-all, skip-space, symbol, until-newline},
+  this::header.parse {header-parser},
+  this::response {Response, response},
 }
 
 constant _status-code: zonk(int) {

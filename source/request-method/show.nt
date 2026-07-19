@@ -1,5 +1,5 @@
 import {
-  request-method {
+  this::request-method {
     DELETE,
     GET,
     HEAD,

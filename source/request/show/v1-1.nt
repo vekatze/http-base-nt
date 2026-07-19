@@ -1,8 +1,8 @@
 import {
   core::string {join},
-  header.show {show-header},
-  request {Request, request},
-  request-method.show {show-request-method},
+  this::header.show {show-header},
+  this::request {Request, request},
+  this::request-method.show {show-request-method},
 }
 
 define show-request(r: request) -> string {

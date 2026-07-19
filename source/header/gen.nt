@@ -2,8 +2,8 @@ import {
   noa::gen {Gen, apply, gen},
   noa::gen.list {gen-list},
   noa::suite {gen-kit},
-  field.gen {gen-field},
-  header {header},
+  this::field.gen {gen-field},
+  this::header {header},
 }
 
 constant gen-header: gen(header) {

@@ -2,10 +2,10 @@ import {
   noa::gen {Gen, apply, gen, gen-bind, gen-map},
   noa::gen.generic {derive},
   noa::suite {gen-kit},
-  _gen {gen-non-empty-token},
-  header.gen {gen-header},
-  request {Request, request},
-  request-method {request-method},
+  this::_gen {gen-non-empty-token},
+  this::header.gen {gen-header},
+  this::request {Request, request},
+  this::request-method {request-method},
 }
 
 define gen-request-method() -> gen(request-method) {

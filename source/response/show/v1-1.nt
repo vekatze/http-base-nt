@@ -1,8 +1,8 @@
 import {
   core::int.show {show-int},
   core::string {join},
-  header.show {show-header},
-  response {Response, response},
+  this::header.show {show-header},
+  this::response {Response, response},
 }
 
 define _get-status-code-string(code: int) -> &string {

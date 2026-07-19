@@ -1,7 +1,7 @@
 import {
   zonk::parse {many, zonk},
-  field.parse {field-parser},
-  header {header},
+  this::field.parse {field-parser},
+  this::header {header},
 }
 
 define header-parser() -> zonk(header) {

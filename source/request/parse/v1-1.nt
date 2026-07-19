@@ -1,9 +1,9 @@
 import {
   zonk::parse {zonk},
-  _parse {http-line-break, read-all, skip-space, symbol},
-  header.parse {header-parser},
-  request {Request, request},
-  request-method.parse {request-method-parser},
+  this::_parse {http-line-break, read-all, skip-space, symbol},
+  this::header.parse {header-parser},
+  this::request {Request, request},
+  this::request-method.parse {request-method-parser},
 }
 
 constant request-parser: zonk(request) {

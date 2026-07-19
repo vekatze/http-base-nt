@@ -4,14 +4,14 @@ import {
   noa::suite {make-default-noa-kit},
   noa::suite.spec {check, property},
   zonk::parse {make-zonk-kit},
-  request {request},
-  request.gen {gen-request},
-  request.parse.v1-1 {request-parser},
-  request.show.v1-1 {show-request},
-  response {response},
-  response.gen {gen-response},
-  response.parse.v1-1 {response-parser},
-  response.show.v1-1 {show-response},
+  this::request {request},
+  this::request.gen {gen-request},
+  this::request.parse.v1-1 {request-parser},
+  this::request.show.v1-1 {show-request},
+  this::response {response},
+  this::response.gen {gen-response},
+  this::response.parse.v1-1 {response-parser},
+  this::response.show.v1-1 {show-response},
 }
 
 define main() -> unit {

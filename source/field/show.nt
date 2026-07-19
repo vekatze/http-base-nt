@@ -1,6 +1,6 @@
 import {
   core::string {join},
-  field {Field, field},
+  this::field {Field, field},
 }
 
 define show-field(h: field) -> string {

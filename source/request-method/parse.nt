@@ -1,7 +1,7 @@
 import {
   zonk::parse {report-unexpected-input, zonk},
-  _parse {symbol},
-  request-method {
+  this::_parse {symbol},
+  this::request-method {
     DELETE,
     GET,
     HEAD,

@@ -1,5 +1,5 @@
 import {
-  field {field},
+  this::field {field},
 }
 
 alias header {
