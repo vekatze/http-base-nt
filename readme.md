@@ -5,7 +5,7 @@
 ## Installation
 
 ```sh
-neut get http-base https://github.com/vekatze/http-base-nt/raw/main/archive/0-1-51.tar.zst
+neut get http-base https://github.com/vekatze/http-base-nt/raw/main/archive/0.2.1.tar.zst
 ```
 
 ## Types
@@ -62,16 +62,25 @@ data field {
 
 ```neut
 // A parser for an HTTP/1.1 request.
-constant request-parser<c>: zonk(c, request)
+constant request-parser: zonk(request)
 
 // A parser for an HTTP/1.1 response.
-constant response-parser<c>: zonk(c, response)
+constant response-parser: zonk(response)
 
 // Formats a request as an HTTP/1.1 request.
 define show-request(r: request) -> string
 
 // Formats a response as an HTTP/1.1 response.
 define show-response(resp: response) -> string
+
+// Formats an HTTP request method.
+define show-request-method(rm: request-method) -> string
+
+// Formats an HTTP header field.
+define show-field(f: field) -> string
+
+// Formats an HTTP header.
+define show-header(h: header) -> string
 
 // Constructs a response from a status code and a body.
 define string-response(status-code: int, body: string) -> response
