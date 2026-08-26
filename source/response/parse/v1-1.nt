@@ -7,9 +7,9 @@ import {
 }
 
 constant _status-code: zonk(int) {
-  (k) =>> {
-    try status-code-string = take-while(is-status-code-number)(k);
-    let status-code-or-none on status-code-string = parse-int(status-code-string);
+  @(k) => {
+    try status-code-string = take-while@(is-status-code-number)@(k);
+    let status-code-or-none on status-code-string = parse-int@(status-code-string);
     let _ = status-code-string;
     match status-code-or-none {
     | Right(v) =>
@@ -21,18 +21,18 @@ constant _status-code: zonk(int) {
 }
 
 constant response-parser: zonk(response) {
-  (k) =>> {
-    try protocol-version = symbol(k);
+  @(k) => {
+    try protocol-version = symbol@(k);
     let _ = protocol-version;
-    try _ = skip-space(k);
-    try status-code = _status-code(k);
-    try _ = skip-space(k);
-    try reason-phrase = until-newline(k);
+    try _ = skip-space@(k);
+    try status-code = _status-code@(k);
+    try _ = skip-space@(k);
+    try reason-phrase = until-newline@(k);
     let _ = reason-phrase;
-    try _ = http-line-break(k);
-    try fields = header-parser()(k);
-    try _ = http-line-break(k);
-    try body = read-all(k);
+    try _ = http-line-break@(k);
+    try fields = header-parser()@(k);
+    try _ = http-line-break@(k);
+    try body = read-all@(k);
     Right(
       Response{
         status-code,

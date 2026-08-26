@@ -16,8 +16,8 @@ define _gen-field() -> gen(field) {
 
 constant gen-field: gen(field) {
   Gen(
-    <r>(k: &gen-kit) =>> {
-      apply<r, field>(_gen-field(), k)
+    @<r>(k: &gen-kit) => {
+      apply@<r, field>(_gen-field(), k)
     },
   )
 }

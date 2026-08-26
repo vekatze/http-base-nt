@@ -7,17 +7,17 @@ import {
 }
 
 constant request-parser: zonk(request) {
-  (k) =>> {
-    try method = request-method-parser(k);
-    try _ = skip-space(k);
-    try path = symbol(k);
-    try _ = skip-space(k);
-    try protocol-version = symbol(k);
+  @(k) => {
+    try method = request-method-parser@(k);
+    try _ = skip-space@(k);
+    try path = symbol@(k);
+    try _ = skip-space@(k);
+    try protocol-version = symbol@(k);
     let _ = protocol-version;
-    try _ = http-line-break(k);
-    try fields = header-parser()(k);
-    try _ = http-line-break(k);
-    try body = read-all(k);
+    try _ = http-line-break@(k);
+    try fields = header-parser()@(k);
+    try _ = http-line-break@(k);
+    try body = read-all@(k);
     Right(
       Request{
         method,

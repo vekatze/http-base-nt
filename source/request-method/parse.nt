@@ -15,8 +15,8 @@ import {
 }
 
 constant request-method-parser: zonk(request-method) {
-  (k) =>> {
-    try method-string = symbol(k);
+  @(k) => {
+    try method-string = symbol@(k);
     let method-or-none on method-string =
       if eq-string(method-string, "GET") {
         Right(GET)

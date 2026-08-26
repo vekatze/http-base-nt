@@ -18,25 +18,25 @@ define is-colon(r: rune) -> bool {
 }
 
 constant skip-space: zonk(unit) {
-  drop-while(is-space)
+  drop-while@(is-space)
 }
 
 constant symbol: zonk(string) {
-  take-while(compose(not, is-space))
+  take-while@(compose(not, is-space))
 }
 
 constant until-newline: zonk(string) {
-  take-while((r) => {
+  take-while@((r) => {
     ne-rune(r, `\r`)
   })
 }
 
 constant http-line-break: zonk(unit) {
-  chunk("\r\n")
+  chunk@("\r\n")
 }
 
 constant read-all: zonk(string) {
-  take-while((_) => {
+  take-while@((_) => {
     True
   })
 }

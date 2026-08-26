@@ -19,8 +19,8 @@ define _gen-response() -> gen(response) {
 
 constant gen-response: gen(response) {
   Gen(
-    <r>(k: &gen-kit) =>> {
-      apply<r, response>(_gen-response(), k)
+    @<r>(k: &gen-kit) => {
+      apply@<r, response>(_gen-response(), k)
     },
   )
 }
