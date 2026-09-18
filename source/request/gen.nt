@@ -25,7 +25,7 @@ define _gen-request() -> gen(request) {
 
 constant gen-request: gen(request) {
   Gen(
-    @<r>(k: &gen-kit) => {
+    <r>(k: &gen-kit) =>> {
       apply@<r, request>(_gen-request(), k)
     },
   )

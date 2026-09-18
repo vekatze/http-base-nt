@@ -6,7 +6,7 @@ import {
   this::field {Field, field},
 }
 
-define _field-value-parser@(k: &zonk-kit, acc: list(string)) -> parsed(string) {
+define _field-value-parser(k: &zonk-kit, acc: list(string)) ->> parsed(string) {
   try new-fragment = until-newline@(k);
   try _ = chunk@("\r")@(k);
   try none-or-newline = optional@(chunk@("\n"))@(k);
@@ -19,7 +19,7 @@ define _field-value-parser@(k: &zonk-kit, acc: list(string)) -> parsed(string) {
 }
 
 constant field-parser: zonk(field) {
-  @(k) => {
+  (k) =>> {
     try _ = not-followed-by@("newline", chunk@("\r\n"))@(k);
     try key = take-while@(compose(not, is-colon))@(k);
     try _ = chunk@(":")@(k);

@@ -7,7 +7,7 @@ import {
 }
 
 constant _status-code: zonk(int) {
-  @(k) => {
+  (k) =>> {
     try status-code-string = take-while@(is-status-code-number)@(k);
     let status-code-or-none on status-code-string = parse-int@(status-code-string);
     let _ = status-code-string;
@@ -21,7 +21,7 @@ constant _status-code: zonk(int) {
 }
 
 constant response-parser: zonk(response) {
-  @(k) => {
+  (k) =>> {
     try protocol-version = symbol@(k);
     let _ = protocol-version;
     try _ = skip-space@(k);

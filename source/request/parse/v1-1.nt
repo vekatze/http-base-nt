@@ -7,7 +7,7 @@ import {
 }
 
 constant request-parser: zonk(request) {
-  @(k) => {
+  (k) =>> {
     try method = request-method-parser@(k);
     try _ = skip-space@(k);
     try path = symbol@(k);

@@ -8,7 +8,7 @@ import {
 
 constant gen-header: gen(header) {
   Gen(
-    @<r>(k: &gen-kit) => {
+    <r>(k: &gen-kit) =>> {
       apply@<r, header>(gen-list(gen-field), k)
     },
   )
