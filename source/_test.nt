@@ -1,6 +1,6 @@
 import {
-  core::list {length},
   core::string {split},
+  core::vector {length},
   noa::suite {make-default-noa-kit},
   noa::suite.spec {check, property},
   zonk::parse {make-zonk-kit},
